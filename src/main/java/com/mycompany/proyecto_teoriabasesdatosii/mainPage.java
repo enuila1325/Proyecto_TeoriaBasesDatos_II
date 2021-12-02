@@ -12,7 +12,7 @@ import org.neo4j.driver.Session;
 import javax.swing.DefaultComboBoxModel;
 
 public class mainPage extends javax.swing.JFrame {
-    
+
     public mainPage() {
         initComponents();
         setLocationRelativeTo(null);
@@ -22,7 +22,7 @@ public class mainPage extends javax.swing.JFrame {
         categoriasEnSistema = ad.cargarCategorias();
         prefuntaEnSistema = ad.cargarPreguntas();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -741,7 +741,10 @@ public class mainPage extends javax.swing.JFrame {
         fechaRealizacion = dc_fechaExamen.getDate();
         Examen e = new Examen(id, idClase, cantiPreguntas, format.format(fechaRealizacion));
         e.insertExamen();
-        cn.actualizarAdmin();
+        try {
+            cn.actualizarAdmin();
+        } catch (Exception ex) {
+        }
     }//GEN-LAST:event_jb_crearExamenActionPerformed
 
     private void comenzarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comenzarExamenActionPerformed
@@ -778,7 +781,10 @@ public class mainPage extends javax.swing.JFrame {
         }
         Pregunta p = new Pregunta(nuevoID, idCategoria, idClase, titulo, descripcion, resp);
         p.insertPregunta();
-        cn.actualizarAdmin();
+        try {
+            cn.actualizarAdmin();
+        } catch (Exception ex) {
+        }
     }//GEN-LAST:event_jb_crearNuevaPreguntaActionPerformed
 
     private void jb_gotoCrearCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoCrearCategoriaActionPerformed
@@ -818,7 +824,10 @@ public class mainPage extends javax.swing.JFrame {
         int idCategoria = categoriasEnSistema.size() + 1;
         Categoria c = new Categoria(idCategoria, nombre, idClase);
         c.insertCategoria();
-        cn.actualizarAdmin();
+        try {
+            cn.actualizarAdmin();
+        } catch (Exception ex) {
+        }
     }//GEN-LAST:event_jb_crearCategoriaActionPerformed
 
     /**
@@ -929,7 +938,7 @@ public class mainPage extends javax.swing.JFrame {
     private ArrayList<Alumno> alumnosEnSistema = new ArrayList<>();
     private ArrayList<Categoria> categoriasEnSistema = new ArrayList<>();
     private ArrayList<Pregunta> prefuntaEnSistema = new ArrayList<>();
-    
+
     private ArrayList<String> titulos;
     private ArrayList<String> descrps;
     private ArrayList<Boolean> resps;
@@ -943,21 +952,21 @@ public class mainPage extends javax.swing.JFrame {
     int contadorPreguntasRespondidas = 0;
     int contadorTotalPreguntas = 0;
     boolean flag = false;
-    
+
     public void actualizaEstado() {
         clasesEnSistema.clear();
         examenesEnSistema.clear();
         alumnosEnSistema.clear();
         categoriasEnSistema.clear();
         prefuntaEnSistema.clear();
-        
+
         clasesEnSistema = ad.cargarClases();
         examenesEnSistema = ad.cargarExamenes();
         alumnosEnSistema = ad.cargarAlumnos();
         categoriasEnSistema = ad.cargarCategorias();
         prefuntaEnSistema = ad.cargarPreguntas();
     }
-    
+
     public ArrayList<String> users() {
         Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
         try (Session session = driver.session()) {
@@ -972,7 +981,7 @@ public class mainPage extends javax.swing.JFrame {
             });
         }
     }
-    
+
     public ArrayList<String> passwords() {
         Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
         try (Session session = driver.session()) {
@@ -987,5 +996,5 @@ public class mainPage extends javax.swing.JFrame {
             });
         }
     }
-    
+
 }
