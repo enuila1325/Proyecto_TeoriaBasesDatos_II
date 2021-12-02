@@ -1,28 +1,28 @@
 package com.mycompany.proyecto_teoriabasesdatosii;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Date;
 import javax.swing.JOptionPane;
-import org.neo4j.driver.AuthToken;
 import org.neo4j.driver.AuthTokens;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;
 import org.neo4j.driver.Result;
 import org.neo4j.driver.Session;
-import org.neo4j.driver.Transaction;
-import org.neo4j.driver.TransactionWork;
-import static org.neo4j.driver.Values.parameters;
-import java.util.Random;
+import javax.swing.DefaultComboBoxModel;
 
 public class mainPage extends javax.swing.JFrame {
-
+    
     public mainPage() {
         initComponents();
         setLocationRelativeTo(null);
+        clasesEnSistema = ad.cargarClases();
+        examenesEnSistema = ad.cargarExamenes();
+        alumnosEnSistema = ad.cargarAlumnos();
+        categoriasEnSistema = ad.cargarCategorias();
+        prefuntaEnSistema = ad.cargarPreguntas();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -31,10 +31,10 @@ public class mainPage extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         js_cantPreguntas = new javax.swing.JSpinner();
-        tf_idClassExam = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        tf_dateNewExam = new javax.swing.JTextField();
         jb_crearExamen = new javax.swing.JButton();
+        dc_fechaExamen = new com.toedter.calendar.JDateChooser();
+        cb_selectorClaseParaExamen = new javax.swing.JComboBox<>();
         pantallaRegistro = new javax.swing.JFrame();
         labelNewName = new javax.swing.JLabel();
         labelNewLogin = new javax.swing.JLabel();
@@ -50,6 +50,7 @@ public class mainPage extends javax.swing.JFrame {
         jb_gotoCrearClase = new javax.swing.JButton();
         jb_gotoCrearPregunta = new javax.swing.JButton();
         jb_listarClases = new javax.swing.JButton();
+        jb_gotoCrearCategoria = new javax.swing.JButton();
         pantallaCrearPregunta = new javax.swing.JFrame();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -58,10 +59,12 @@ public class mainPage extends javax.swing.JFrame {
         tf_tituloNuevPregunta = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         ta_descrpNuevaPregunta = new javax.swing.JTextArea();
-        tf_codClaseNuevaPregunta = new javax.swing.JTextField();
         rb_vRespNuevaPregunta = new javax.swing.JRadioButton();
         rb_fRespNuevaPregunta = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        jb_crearNuevaPregunta = new javax.swing.JButton();
+        cb_eleccionClasePregunta = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        cb_selectorCategoria = new javax.swing.JComboBox<>();
         respNewPregunta_Grupo = new javax.swing.ButtonGroup();
         seleccionAlumno = new javax.swing.JFrame();
         jb_realizarExamen = new javax.swing.JButton();
@@ -76,6 +79,11 @@ public class mainPage extends javax.swing.JFrame {
         comenzarExamen = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         respuestaAlumno = new javax.swing.ButtonGroup();
+        pantallaCrearcategoria = new javax.swing.JFrame();
+        jLabel5 = new javax.swing.JLabel();
+        tf_NombreCategoria = new javax.swing.JTextField();
+        cb_selectorClasesCategoria = new javax.swing.JComboBox<>();
+        jb_crearCategoria = new javax.swing.JButton();
         labelLogin = new javax.swing.JLabel();
         tf_login = new javax.swing.JTextField();
         pf_passLogin = new javax.swing.JPasswordField();
@@ -98,43 +106,46 @@ public class mainPage extends javax.swing.JFrame {
             }
         });
 
+        cb_selectorClaseParaExamen.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+
         javax.swing.GroupLayout pantallaCrearExamenLayout = new javax.swing.GroupLayout(pantallaCrearExamen.getContentPane());
         pantallaCrearExamen.getContentPane().setLayout(pantallaCrearExamenLayout);
         pantallaCrearExamenLayout.setHorizontalGroup(
             pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pantallaCrearExamenLayout.createSequentialGroup()
-                .addGap(363, 363, 363)
-                .addGroup(pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addGap(33, 33, 33)
-                .addGroup(pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tf_idClassExam)
-                    .addComponent(js_cantPreguntas)
-                    .addComponent(tf_dateNewExam))
-                .addGap(86, 86, 86))
-            .addGroup(pantallaCrearExamenLayout.createSequentialGroup()
-                .addGap(290, 290, 290)
-                .addComponent(jb_crearExamen)
-                .addContainerGap(290, Short.MAX_VALUE))
+                .addGroup(pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pantallaCrearExamenLayout.createSequentialGroup()
+                        .addGap(290, 290, 290)
+                        .addComponent(jb_crearExamen))
+                    .addGroup(pantallaCrearExamenLayout.createSequentialGroup()
+                        .addGap(319, 319, 319)
+                        .addGroup(pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(34, 34, 34)
+                        .addGroup(pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cb_selectorClaseParaExamen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(js_cantPreguntas)
+                            .addComponent(dc_fechaExamen, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         pantallaCrearExamenLayout.setVerticalGroup(
             pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pantallaCrearExamenLayout.createSequentialGroup()
-                .addGap(184, 184, 184)
+                .addGap(176, 176, 176)
                 .addGroup(pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(tf_idClassExam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(cb_selectorClaseParaExamen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(js_cantPreguntas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(41, 41, 41)
+                .addGroup(pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(tf_dateNewExam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                    .addComponent(dc_fechaExamen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(jb_crearExamen)
                 .addGap(49, 49, 49))
         );
@@ -234,35 +245,46 @@ public class mainPage extends javax.swing.JFrame {
         jb_listarClases.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
         jb_listarClases.setText("Listar clases con sus examenes");
 
+        jb_gotoCrearCategoria.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jb_gotoCrearCategoria.setText("CREAR CATEGORÍA");
+        jb_gotoCrearCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_gotoCrearCategoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout seleccionAdminLayout = new javax.swing.GroupLayout(seleccionAdmin.getContentPane());
         seleccionAdmin.getContentPane().setLayout(seleccionAdminLayout);
         seleccionAdminLayout.setHorizontalGroup(
             seleccionAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(seleccionAdminLayout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addGroup(seleccionAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jb_gotoCrearExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jb_gotoCrearClase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(117, Short.MAX_VALUE))
             .addGroup(seleccionAdminLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(seleccionAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jb_gotoCrearPregunta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jb_listarClases, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(seleccionAdminLayout.createSequentialGroup()
+                .addGap(116, 116, 116)
+                .addGroup(seleccionAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jb_gotoCrearExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jb_gotoCrearClase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jb_gotoCrearCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         seleccionAdminLayout.setVerticalGroup(
             seleccionAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(seleccionAdminLayout.createSequentialGroup()
-                .addGap(248, 248, 248)
+                .addGap(195, 195, 195)
                 .addComponent(jb_gotoCrearExamen)
-                .addGap(42, 42, 42)
+                .addGap(31, 31, 31)
                 .addComponent(jb_gotoCrearClase)
-                .addGap(42, 42, 42)
+                .addGap(39, 39, 39)
+                .addComponent(jb_gotoCrearCategoria)
+                .addGap(36, 36, 36)
                 .addComponent(jb_gotoCrearPregunta)
                 .addGap(43, 43, 43)
                 .addComponent(jb_listarClases)
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
         );
 
         jLabel6.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
@@ -289,13 +311,23 @@ public class mainPage extends javax.swing.JFrame {
         rb_fRespNuevaPregunta.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
         rb_fRespNuevaPregunta.setText("Falso");
 
-        jButton1.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
-        jButton1.setText("CREAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jb_crearNuevaPregunta.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jb_crearNuevaPregunta.setText("CREAR");
+        jb_crearNuevaPregunta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jb_crearNuevaPreguntaActionPerformed(evt);
             }
         });
+
+        cb_eleccionClasePregunta.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        cb_eleccionClasePregunta.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_eleccionClasePreguntaItemStateChanged(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jLabel10.setText("Categoria");
 
         javax.swing.GroupLayout pantallaCrearPreguntaLayout = new javax.swing.GroupLayout(pantallaCrearPregunta.getContentPane());
         pantallaCrearPregunta.getContentPane().setLayout(pantallaCrearPreguntaLayout);
@@ -303,46 +335,53 @@ public class mainPage extends javax.swing.JFrame {
             pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaCrearPreguntaLayout.createSequentialGroup()
                 .addContainerGap(48, Short.MAX_VALUE)
-                .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
                 .addGap(155, 155, 155)
                 .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tf_tituloNuevPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tf_codClaseNuevaPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(pantallaCrearPreguntaLayout.createSequentialGroup()
+                    .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(tf_tituloNuevPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaCrearPreguntaLayout.createSequentialGroup()
                             .addComponent(rb_vRespNuevaPregunta)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(rb_fRespNuevaPregunta))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jb_crearNuevaPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(cb_selectorCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, 173, Short.MAX_VALUE)
+                        .addComponent(cb_eleccionClasePregunta, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(79, 79, 79))
         );
         pantallaCrearPreguntaLayout.setVerticalGroup(
             pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaCrearPreguntaLayout.createSequentialGroup()
-                .addContainerGap(61, Short.MAX_VALUE)
+                .addGap(65, 65, 65)
                 .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(tf_tituloNuevPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                    .addComponent(tf_tituloNuevPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(46, 46, 46)
                 .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addGap(25, 25, 25)
                 .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_codClaseNuevaPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(30, 30, 30)
+                    .addComponent(jLabel8)
+                    .addComponent(cb_eleccionClasePregunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(cb_selectorCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(rb_vRespNuevaPregunta)
                     .addComponent(rb_fRespNuevaPregunta))
                 .addGap(37, 37, 37)
-                .addComponent(jButton1)
+                .addComponent(jb_crearNuevaPregunta)
                 .addGap(17, 17, 17))
         );
 
@@ -458,9 +497,56 @@ public class mainPage extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pantallaExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(comenzarExamen, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pantallaExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)))
+                    .addComponent(jButton2))
                 .addGap(25, 25, 25))
+        );
+
+        jLabel5.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jLabel5.setText("Nombre Categoría");
+
+        tf_NombreCategoria.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+
+        jb_crearCategoria.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jb_crearCategoria.setText("CREAR");
+        jb_crearCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_crearCategoriaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pantallaCrearcategoriaLayout = new javax.swing.GroupLayout(pantallaCrearcategoria.getContentPane());
+        pantallaCrearcategoria.getContentPane().setLayout(pantallaCrearcategoriaLayout);
+        pantallaCrearcategoriaLayout.setHorizontalGroup(
+            pantallaCrearcategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pantallaCrearcategoriaLayout.createSequentialGroup()
+                .addGroup(pantallaCrearcategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pantallaCrearcategoriaLayout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(jLabel5))
+                    .addGroup(pantallaCrearcategoriaLayout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(tf_NombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pantallaCrearcategoriaLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(cb_selectorClasesCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaCrearcategoriaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jb_crearCategoria)
+                .addGap(144, 144, 144))
+        );
+        pantallaCrearcategoriaLayout.setVerticalGroup(
+            pantallaCrearcategoriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pantallaCrearcategoriaLayout.createSequentialGroup()
+                .addGap(107, 107, 107)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(tf_NombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62)
+                .addComponent(cb_selectorClasesCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addComponent(jb_crearCategoria)
+                .addGap(56, 56, 56))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -538,7 +624,6 @@ public class mainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jb_iniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_iniciarSesionActionPerformed
-
         char[] pass = pf_passLogin.getPassword();
         String verify = "";
         for (int i = 0; i < pass.length; i++) {
@@ -561,146 +646,180 @@ public class mainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_iniciarSesionActionPerformed
 
     private void jb_gotoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoRegistroActionPerformed
+        actualizaEstado();
         pantallaRegistro.pack();
         pantallaRegistro.setLocationRelativeTo(this);
         pantallaRegistro.setVisible(true);
     }//GEN-LAST:event_jb_gotoRegistroActionPerformed
 
     private void jb_gotoCrearExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoCrearExamenActionPerformed
+        actualizaEstado();
         pantallaCrearExamen.pack();
         pantallaCrearExamen.setLocationRelativeTo(this);
         pantallaCrearExamen.setVisible(true);
+        cb_selectorClaseParaExamen.removeAllItems();
+        DefaultComboBoxModel cbm = (DefaultComboBoxModel) cb_selectorClaseParaExamen.getModel();
+        if (clasesEnSistema.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay clases en el sistema a las que asociar un examen. \n\nCree una clase primero.", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            cbm.addElement("NO HAY CLASES EN EL SISTEMA");
+            jb_crearExamen.setEnabled(false);
+        } else {
+            for (int i = 0; i < clasesEnSistema.size(); i++) {
+                cbm.addElement(clasesEnSistema.get(i).getNombre());
+            }
+            jb_crearExamen.setEnabled(true);
+        }
     }//GEN-LAST:event_jb_gotoCrearExamenActionPerformed
 
     private void jb_gotoCrearClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoCrearClaseActionPerformed
+        actualizaEstado();
         String nombreClase = JOptionPane.showInputDialog(this, "Ingrese el nombre de la nueva clase: ", "NOMBRE", JOptionPane.INFORMATION_MESSAGE);
-        ArrayList<Integer> ids = idsClase();
-        int id = ids.get(0) + 1;
-        cn.insertClase(nombreClase, id);
+        ArrayList<Clase> ids = ad.cargarClases();
+        int opc = JOptionPane.showConfirmDialog(this, "Desea añadir la clase " + nombreClase.toUpperCase() + " al sistema?", "CONFIRMAR", JOptionPane.YES_NO_CANCEL_OPTION);
+        switch (opc) {
+            case JOptionPane.YES_OPTION:
+                Clase c = new Clase(ids.size() + 1, nombreClase);
+                c.insertClase();
+                //cn.actualizarAdmin();
+                break;
+            case JOptionPane.CANCEL_OPTION:
+                JOptionPane.showMessageDialog(this, "Se cancelo la operacion");
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "No se añadio la nueva clase al sistema");
+                break;
+        }
     }//GEN-LAST:event_jb_gotoCrearClaseActionPerformed
 
     private void jb_gotoCrearPreguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoCrearPreguntaActionPerformed
+        actualizaEstado();
+        DefaultComboBoxModel cbm = (DefaultComboBoxModel) cb_eleccionClasePregunta.getModel();
+        cbm.removeAllElements();
+        System.out.println(clasesEnSistema.size());
+        DefaultComboBoxModel cbm2 = (DefaultComboBoxModel) cb_selectorCategoria.getModel();
+        if (clasesEnSistema.isEmpty() && categoriasEnSistema.isEmpty()) {
+            cbm.addElement("NO HAY CLASES EN EL SISTEMA");
+            cbm.addElement("NO HAY CATEGORIAS EN EL SISTEMA");
+            jb_crearNuevaPregunta.setEnabled(false);
+        } else {
+            jb_crearNuevaPregunta.setEnabled(true);
+            for (int i = 0; i < clasesEnSistema.size(); i++) {
+                cbm.addElement(clasesEnSistema.get(i).getNombre());
+            }
+            cb_eleccionClasePregunta.setModel(cbm);
+        }
         pantallaCrearPregunta.pack();
         pantallaCrearPregunta.setLocationRelativeTo(this);
         pantallaCrearPregunta.setVisible(true);
     }//GEN-LAST:event_jb_gotoCrearPreguntaActionPerformed
 
     private void jb_realizarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_realizarExamenActionPerformed
-        codClase = Integer.parseInt(JOptionPane.showInputDialog(this, "Ingrese el codigo de la clase", "CODIGO", JOptionPane.INFORMATION_MESSAGE));
-        pantallaExamen.pack();
-        pantallaExamen.setLocationRelativeTo(this);
-        pantallaExamen.setVisible(true);
-        titulos = filtroTitulosPreguntas(codClase);
-        descrps = filtroDescripcionesPreguntas(codClase);
-        resps = filtroRespuestasPreguntas(codClase);
-        idsGeneral = idsPreguntas();
+
     }//GEN-LAST:event_jb_realizarExamenActionPerformed
 
     private void jb_registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_registroActionPerformed
-        String[] atributos = new String[4];
-        ArrayList<Integer> idsComprobar = ids();
-        int id = idsComprobar.get(0) + 1;
-        atributos[0] = String.valueOf(id);
-        atributos[1] = tf_newLogin.getText();
-        atributos[2] = tf_newName.getText();
-
+        ArrayList<Alumno> idsComprobar = ad.cargarAlumnos();
+        int id = idsComprobar.size() + 1;
+        String login = tf_newLogin.getText();
+        String nombre = tf_newName.getText();
         char[] pass = pf_newPassword.getPassword();
         String aux = "";
         for (int i = 0; i < pass.length; i++) {
             aux += pass[i];
         }
-        atributos[3] = aux;
-
-        cn.insertAlumno(atributos);
+        Alumno a = new Alumno(id, nombre, login, aux);
+        a.insertAlumno();
     }//GEN-LAST:event_jb_registroActionPerformed
 
     private void jb_crearExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_crearExamenActionPerformed
-        String[] atributos = new String[4];
-        ArrayList<Integer> ids = idsExamen();
-        int id = ids.get(0) + 1;
-
-        atributos[0] = String.valueOf(id);
-        atributos[1] = tf_idClassExam.getText();
-        atributos[2] = js_cantPreguntas.getValue().toString();
-        atributos[3] = tf_dateNewExam.getText();
-        cn.insertExamen(atributos);
-        cn.actualizar();
+        ArrayList<Examen> ids = ad.cargarExamenes();
+        int id = ids.size() + 1;
+        int idClase = cb_selectorClaseParaExamen.getSelectedIndex() + 1;
+        int cantiPreguntas = Integer.parseInt(js_cantPreguntas.getValue().toString());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaRealizacion = new Date();
+        fechaRealizacion = dc_fechaExamen.getDate();
+        Examen e = new Examen(id, idClase, cantiPreguntas, format.format(fechaRealizacion));
+        e.insertExamen();
+        cn.actualizarAdmin();
     }//GEN-LAST:event_jb_crearExamenActionPerformed
 
     private void comenzarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comenzarExamenActionPerformed
-        Random r = new Random();
-        ArrayList<Integer> idsExamenClase = filtroExamenes(codClase);
-        examenEnUso = 1 + r.nextInt(idsExamenClase.size());
-        System.out.println(examenEnUso);
-        ArrayList<Integer> aux = cantPreguntasExamen(codClase);
-        contadorTotalPreguntas = aux.get(examenEnUso - 1);
-        System.out.println(contadorTotalPreguntas);
+
     }//GEN-LAST:event_comenzarExamenActionPerformed
 
     private void jb_nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_nextQuestionActionPerformed
-        if (contadorTotalPreguntas <= contadorPreguntasRespondidas) {
-            jb_nextQuestion.setEnabled(false);
-            contadorPreguntasRespondidas = 0;
-        } else {
-            resolverPregunta(titulos, descrps, idsPregResp, respsDadas, idsGeneral);
-            System.out.println(contadorPreguntasRespondidas);
-            contadorPreguntasRespondidas++;
-        }
+
     }//GEN-LAST:event_jb_nextQuestionActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        int resp = JOptionPane.showConfirmDialog(this, "DESEA TERMINAR?", "Una vez terminado, no podra regresar.", JOptionPane.YES_NO_OPTION);
-        if (resp == JOptionPane.YES_OPTION) {
-            for (int i = 0; i < respsDadas.size(); i++) {
-                if (Objects.equals(respsDadas.get(i), resps.get(i))) {
-                    puntaje += 5;
-                }
-            }
-            String atributos[] = new String[3];
-            ArrayList<String> users = users();
-            ArrayList<Integer> idUsers = ids();
-            int aux = idUsers.get(users.indexOf(tf_login.getText()));
-            atributos[0] = String.valueOf(aux);
-            ArrayList<Integer> filtro = filtroExamenes(codClase);
-
-            int id = filtro.get(examenEnUso - 1);
-
-            atributos[1] = String.valueOf(id);
-            atributos[2] = String.valueOf(puntaje);
-
-            cn.insertResultado(atributos, respsDadas, idsPregResp);
-            cn.actualizar();
-
-        } else {
-            return;
-        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jb_crearNuevaPreguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_crearNuevaPreguntaActionPerformed
         String titulo = tf_tituloNuevPregunta.getText();
         String descripcion = ta_descrpNuevaPregunta.getText();
-        ArrayList<Integer> idsPre = idsPreguntas();
-        int nuevoID = idsPre.get(0) + 1;
-        String idClase = tf_codClaseNuevaPregunta.getText();
+        int nuevoID = prefuntaEnSistema.size() + 1;
+        int idClase = cb_eleccionClasePregunta.getSelectedIndex() + 1;
         boolean resp = false;
         if (rb_fRespNuevaPregunta.isSelected()) {
             resp = false;
         } else if (rb_vRespNuevaPregunta.isSelected()) {
             resp = true;
         }
-        String atributos[] = new String[5];
-        atributos[0] = String.valueOf(nuevoID);
-        atributos[1] = idClase;
-        atributos[2] = titulo;
-        atributos[3] = descripcion;
-        atributos[4] = String.valueOf(resp);
+        int idCategoria = 0;
+        int selectorClase = cb_eleccionClasePregunta.getSelectedIndex() + 1;
+        int selectorCategoria = cb_selectorCategoria.getSelectedIndex();
+        String nombreCat = cb_selectorCategoria.getItemAt(selectorCategoria).toString();
+        for (int i = 0; i < categoriasEnSistema.size(); i++) {
+            if (nombreCat.equals(categoriasEnSistema.get(i).getNombreCategoria()) && selectorClase == categoriasEnSistema.get(i).getIdClase()) {
+                idCategoria = categoriasEnSistema.get(i).getIdCategoria();
+            }
+        }
+        Pregunta p = new Pregunta(nuevoID, idCategoria, idClase, titulo, descripcion, resp);
+        p.insertPregunta();
+        cn.actualizarAdmin();
+    }//GEN-LAST:event_jb_crearNuevaPreguntaActionPerformed
 
-        cn.insertPregunta(atributos);
+    private void jb_gotoCrearCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoCrearCategoriaActionPerformed
+        actualizaEstado();
+        pantallaCrearcategoria.pack();
+        pantallaCrearcategoria.setLocationRelativeTo(this);
+        pantallaCrearcategoria.setVisible(true);
+        if (clasesEnSistema.isEmpty()) {
+            jb_crearCategoria.setEnabled(false);
+            JOptionPane.showMessageDialog(null, "No hay clases en el sistema a las que asociar una categoria", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            jb_crearCategoria.setEnabled(true);
+            DefaultComboBoxModel cbm = (DefaultComboBoxModel) cb_selectorClasesCategoria.getModel();
+            cbm.removeAllElements();
+            for (int i = 0; i < clasesEnSistema.size(); i++) {
+                cbm.addElement(clasesEnSistema.get(i).getNombre());
+            }
+            cb_selectorClasesCategoria.setModel(cbm);
+        }
+    }//GEN-LAST:event_jb_gotoCrearCategoriaActionPerformed
 
-        cn.actualizar();
+    private void cb_eleccionClasePreguntaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_eleccionClasePreguntaItemStateChanged
+        int selector = cb_eleccionClasePregunta.getSelectedIndex() + 1;
+        DefaultComboBoxModel cbm = (DefaultComboBoxModel) cb_selectorCategoria.getModel();
+        cbm.removeAllElements();
+        for (int i = 0; i < categoriasEnSistema.size(); i++) {
+            if (categoriasEnSistema.get(i).getIdClase() == selector) {
+                cbm.addElement(categoriasEnSistema.get(i).getNombreCategoria());
+            }
+        }
+        cb_selectorCategoria.setModel(cbm);
+    }//GEN-LAST:event_cb_eleccionClasePreguntaItemStateChanged
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jb_crearCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_crearCategoriaActionPerformed
+        String nombre = tf_NombreCategoria.getText();
+        int idClase = cb_selectorClasesCategoria.getSelectedIndex() + 1;
+        int idCategoria = categoriasEnSistema.size() + 1;
+        Categoria c = new Categoria(idCategoria, nombre, idClase);
+        c.insertCategoria();
+        cn.actualizarAdmin();
+    }//GEN-LAST:event_jb_crearCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -739,21 +858,30 @@ public class mainPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cb_eleccionClasePregunta;
+    private javax.swing.JComboBox<String> cb_selectorCategoria;
+    private javax.swing.JComboBox<String> cb_selectorClaseParaExamen;
+    private javax.swing.JComboBox<String> cb_selectorClasesCategoria;
     private javax.swing.JButton comenzarExamen;
-    private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser dc_fechaExamen;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jb_crearCategoria;
     private javax.swing.JButton jb_crearCuadroNotas;
     private javax.swing.JButton jb_crearExamen;
+    private javax.swing.JButton jb_crearNuevaPregunta;
+    private javax.swing.JButton jb_gotoCrearCategoria;
     private javax.swing.JButton jb_gotoCrearClase;
     private javax.swing.JButton jb_gotoCrearExamen;
     private javax.swing.JButton jb_gotoCrearPregunta;
@@ -772,6 +900,7 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JLabel lb_tituloPregunta;
     private javax.swing.JFrame pantallaCrearExamen;
     private javax.swing.JFrame pantallaCrearPregunta;
+    private javax.swing.JFrame pantallaCrearcategoria;
     private javax.swing.JFrame pantallaExamen;
     private javax.swing.JFrame pantallaRegistro;
     private javax.swing.JPasswordField pf_confirmNewPassword;
@@ -787,15 +916,20 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JFrame seleccionAlumno;
     private javax.swing.JTextArea ta_descrpNuevaPregunta;
     private javax.swing.JTextArea ta_descrpPregunta;
-    private javax.swing.JTextField tf_codClaseNuevaPregunta;
-    private javax.swing.JTextField tf_dateNewExam;
-    private javax.swing.JTextField tf_idClassExam;
+    private javax.swing.JTextField tf_NombreCategoria;
     private javax.swing.JTextField tf_login;
     private javax.swing.JTextField tf_newLogin;
     private javax.swing.JTextField tf_newName;
     private javax.swing.JTextField tf_tituloNuevPregunta;
     // End of variables declaration//GEN-END:variables
     private conexionNeo4J cn = new conexionNeo4J("bolt://localhost:7687", "neo4j", "jaguaresac7C");
+    private Administrador ad = new Administrador();
+    private ArrayList<Clase> clasesEnSistema = new ArrayList<>();
+    private ArrayList<Examen> examenesEnSistema = new ArrayList<>();
+    private ArrayList<Alumno> alumnosEnSistema = new ArrayList<>();
+    private ArrayList<Categoria> categoriasEnSistema = new ArrayList<>();
+    private ArrayList<Pregunta> prefuntaEnSistema = new ArrayList<>();
+    
     private ArrayList<String> titulos;
     private ArrayList<String> descrps;
     private ArrayList<Boolean> resps;
@@ -809,169 +943,21 @@ public class mainPage extends javax.swing.JFrame {
     int contadorPreguntasRespondidas = 0;
     int contadorTotalPreguntas = 0;
     boolean flag = false;
-
-    public void resolverPregunta(ArrayList<String> titulosAux, ArrayList<String> descrpAux, ArrayList<Integer> respDadasID, ArrayList<Boolean> respDadasAux, ArrayList<Integer> idsGeneral) {
-
-        Random r = new Random();
-        int electorPregunta = 1 + r.nextInt(titulosAux.size());
-        System.out.println("-->" + titulosAux.size());
-        lb_tituloPregunta.setText(titulosAux.get(electorPregunta - 1));
-        ta_descrpPregunta.setText(descrpAux.get(electorPregunta - 1));
-
-        ArrayList<Integer> aux = filtroIdsPreguntas(codClase);
-
-        boolean respuesta = false;
-        if (rb_respAlumnoV.isSelected()) {
-            respuesta = true;
-        } else if (rb_respAlumnoF.isSelected()) {
-            respuesta = false;
-        }
-        int posIdInsertada = idsGeneral.indexOf(aux.get(electorPregunta - 1));
-        respDadasAux.add(respuesta);
-        respDadasID.add(idsGeneral.get(posIdInsertada));
-        titulosAux.remove(electorPregunta - 1);
-        descrpAux.remove(electorPregunta - 1);
+    
+    public void actualizaEstado() {
+        clasesEnSistema.clear();
+        examenesEnSistema.clear();
+        alumnosEnSistema.clear();
+        categoriasEnSistema.clear();
+        prefuntaEnSistema.clear();
+        
+        clasesEnSistema = ad.cargarClases();
+        examenesEnSistema = ad.cargarExamenes();
+        alumnosEnSistema = ad.cargarAlumnos();
+        categoriasEnSistema = ad.cargarCategorias();
+        prefuntaEnSistema = ad.cargarPreguntas();
     }
-
-    public ArrayList<Integer> idsPreguntas() {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
-        try (Session session = driver.session()) {
-            return session.readTransaction(tx
-                    -> {
-                ArrayList<Integer> ids = new ArrayList<Integer>();
-                Result result = tx.run("MATCH (p: Pregunta) RETURN p.idPregunta ORDER BY p.idPregunta DESC");
-                while (result.hasNext()) {
-                    ids.add(Integer.parseInt(result.next().get(0).asObject().toString()));
-                }
-                return ids;
-            });
-        }
-    }
-
-    public ArrayList<String> filtroTitulosPreguntas(int idClase) {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
-
-        try (Session session = driver.session()) {
-            ArrayList<String> titulos = new ArrayList<>();
-            return session.readTransaction(tx
-                    -> {
-                Result result = tx.run("MATCH (p: Pregunta{idClase: " + idClase + " }) RETURN p.titulo ORDER BY p.idPregunta DESC ;");
-                while (result.hasNext()) {
-                    titulos.add(result.next().get(0).asObject().toString());
-                }
-                return titulos;
-            });
-        }
-    }
-
-    public ArrayList<String> filtroDescripcionesPreguntas(int idClase) {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
-
-        try (Session session = driver.session()) {
-            ArrayList<String> descripciones = new ArrayList<>();
-            return session.readTransaction(tx
-                    -> {
-                Result result = tx.run("MATCH (p: Pregunta{idClase: " + idClase + " }) RETURN p.descripcion ORDER BY p.idPregunta DESC ;");
-                while (result.hasNext()) {
-                    descripciones.add(result.next().get(0).asObject().toString());
-                }
-                return descripciones;
-            });
-        }
-    }
-
-    public ArrayList<Boolean> filtroRespuestasPreguntas(int idClase) {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
-
-        try (Session session = driver.session()) {
-            ArrayList<Boolean> respuestas = new ArrayList<>();
-            return session.readTransaction(tx
-                    -> {
-                Result result = tx.run("MATCH (p: Pregunta{idClase: " + idClase + " }) RETURN p.respuesta ORDER BY p.idPregunta DESC;");
-                while (result.hasNext()) {
-                    respuestas.add(Boolean.parseBoolean(result.next().get(0).asObject().toString()));
-                }
-                return respuestas;
-            });
-        }
-    }
-
-    public ArrayList<Integer> filtroIdsPreguntas(int idClase) {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
-
-        try (Session session = driver.session()) {
-            ArrayList<Integer> respuestas = new ArrayList<>();
-            return session.readTransaction(tx
-                    -> {
-                Result result = tx.run("MATCH (p: Pregunta{idClase: " + idClase + " }) RETURN p.idPregunta ORDER BY p.idPregunta DESC;");
-                while (result.hasNext()) {
-                    respuestas.add(Integer.parseInt(result.next().get(0).asObject().toString()));
-                }
-                return respuestas;
-            });
-        }
-    }
-
-    public ArrayList<Integer> idsExamen() {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
-        try (Session session = driver.session()) {
-            return session.readTransaction(tx
-                    -> {
-                ArrayList<Integer> ids = new ArrayList<Integer>();
-                Result result = tx.run("MATCH (e: Examen) RETURN e.idExamen ORDER BY e.idExamen DESC");
-                while (result.hasNext()) {
-                    ids.add(Integer.parseInt(result.next().get(0).asObject().toString()));
-                }
-                return ids;
-            });
-        }
-    }
-
-    public ArrayList<Integer> filtroExamenes(int idClase) {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
-        try (Session session = driver.session()) {
-            return session.readTransaction(tx
-                    -> {
-                ArrayList<Integer> ids = new ArrayList<Integer>();
-                Result result = tx.run("MATCH (e: Examen{idExamen: " + idClase + " }) RETURN e.idExamen ORDER BY e.idExamen DESC");
-                while (result.hasNext()) {
-                    ids.add(Integer.parseInt(result.next().get(0).asObject().toString()));
-                }
-                return ids;
-            });
-        }
-    }
-
-    public ArrayList<Integer> cantPreguntasExamen(int idClase) {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
-        try (Session session = driver.session()) {
-            return session.readTransaction(tx
-                    -> {
-                ArrayList<Integer> ids = new ArrayList<Integer>();
-                Result result = tx.run("MATCH (e: Examen{ idClase: " + idClase + " }) RETURN e.noPreguntas ORDER BY e.idExamen DESC");
-                while (result.hasNext()) {
-                    ids.add(Integer.parseInt(result.next().get(0).asObject().toString()));
-                }
-                return ids;
-            });
-        }
-    }
-
-    public ArrayList<Integer> ids() {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
-        try (Session session = driver.session()) {
-            return session.readTransaction(tx
-                    -> {
-                ArrayList<Integer> ids = new ArrayList<Integer>();
-                Result result = tx.run("MATCH (a: Alumno) RETURN a.id ORDER BY a.id DESC");
-                while (result.hasNext()) {
-                    ids.add(Integer.parseInt(result.next().get(0).asObject().toString()));
-                }
-                return ids;
-            });
-        }
-    }
-
+    
     public ArrayList<String> users() {
         Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
         try (Session session = driver.session()) {
@@ -986,7 +972,7 @@ public class mainPage extends javax.swing.JFrame {
             });
         }
     }
-
+    
     public ArrayList<String> passwords() {
         Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
         try (Session session = driver.session()) {
@@ -1001,20 +987,5 @@ public class mainPage extends javax.swing.JFrame {
             });
         }
     }
-
-    public ArrayList<Integer> idsClase() {
-        Driver driver = GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "jaguaresac7C"));
-        try (Session session = driver.session()) {
-            return session.readTransaction(tx
-                    -> {
-                ArrayList<Integer> ids = new ArrayList<Integer>();
-                Result result = tx.run("MATCH (c: Clase) RETURN c.idClase ORDER BY c.idClase DESC");
-                while (result.hasNext()) {
-                    ids.add(Integer.parseInt(result.next().get(0).asObject().toString()));
-                }
-                return ids;
-            });
-        }
-    }
-
+    
 }
