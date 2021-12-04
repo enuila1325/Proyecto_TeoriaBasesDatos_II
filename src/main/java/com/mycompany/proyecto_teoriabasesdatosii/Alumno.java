@@ -1,6 +1,5 @@
 package com.mycompany.proyecto_teoriabasesdatosii;
 
-import java.util.ArrayList;
 import org.neo4j.driver.AuthTokens;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.GraphDatabase;

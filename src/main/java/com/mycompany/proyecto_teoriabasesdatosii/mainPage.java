@@ -3,6 +3,7 @@ package com.mycompany.proyecto_teoriabasesdatosii;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import org.neo4j.driver.AuthTokens;
 import org.neo4j.driver.Driver;
@@ -10,6 +11,7 @@ import org.neo4j.driver.GraphDatabase;
 import org.neo4j.driver.Result;
 import org.neo4j.driver.Session;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 public class mainPage extends javax.swing.JFrame {
 
@@ -21,6 +23,7 @@ public class mainPage extends javax.swing.JFrame {
         alumnosEnSistema = ad.cargarAlumnos();
         categoriasEnSistema = ad.cargarCategorias();
         prefuntaEnSistema = ad.cargarPreguntas();
+        registrosEnMatricula = ad.cargarMatricula();
     }
 
     @SuppressWarnings("unchecked")
@@ -69,6 +72,8 @@ public class mainPage extends javax.swing.JFrame {
         seleccionAlumno = new javax.swing.JFrame();
         jb_realizarExamen = new javax.swing.JButton();
         jb_crearCuadroNotas = new javax.swing.JButton();
+        jb_cerrarSesion = new javax.swing.JToggleButton();
+        jb_goToMatricular = new javax.swing.JButton();
         pantallaExamen = new javax.swing.JFrame();
         lb_tituloPregunta = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -84,6 +89,17 @@ public class mainPage extends javax.swing.JFrame {
         tf_NombreCategoria = new javax.swing.JTextField();
         cb_selectorClasesCategoria = new javax.swing.JComboBox<>();
         jb_crearCategoria = new javax.swing.JButton();
+        pantalla_matricula = new javax.swing.JFrame();
+        jb_matricularClase = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tb_clasesDisponibles = new javax.swing.JTable();
+        jLabel11 = new javax.swing.JLabel();
+        pantalla_comienzExamen = new javax.swing.JDialog();
+        cb_selectorExamenRealizar = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jb_comnezarNuevoExamen = new javax.swing.JButton();
+        jb_goBackExamen = new javax.swing.JButton();
+        tf_claseExamenRealizar = new javax.swing.JTextField();
         labelLogin = new javax.swing.JLabel();
         tf_login = new javax.swing.JTextField();
         pf_passLogin = new javax.swing.JPasswordField();
@@ -395,26 +411,56 @@ public class mainPage extends javax.swing.JFrame {
 
         jb_crearCuadroNotas.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
         jb_crearCuadroNotas.setText("Cuadro de notas");
+        jb_crearCuadroNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_crearCuadroNotasActionPerformed(evt);
+            }
+        });
+
+        jb_cerrarSesion.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jb_cerrarSesion.setText("Cerrar Sesión");
+        jb_cerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_cerrarSesionActionPerformed(evt);
+            }
+        });
+
+        jb_goToMatricular.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jb_goToMatricular.setText("MATRICULAR");
+        jb_goToMatricular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_goToMatricularActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout seleccionAlumnoLayout = new javax.swing.GroupLayout(seleccionAlumno.getContentPane());
         seleccionAlumno.getContentPane().setLayout(seleccionAlumnoLayout);
         seleccionAlumnoLayout.setHorizontalGroup(
             seleccionAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seleccionAlumnoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jb_cerrarSesion)
+                .addGap(21, 21, 21))
             .addGroup(seleccionAlumnoLayout.createSequentialGroup()
                 .addGap(141, 141, 141)
                 .addGroup(seleccionAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jb_crearCuadroNotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jb_realizarExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jb_realizarExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jb_goToMatricular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(141, Short.MAX_VALUE))
         );
         seleccionAlumnoLayout.setVerticalGroup(
             seleccionAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(seleccionAlumnoLayout.createSequentialGroup()
-                .addGap(250, 250, 250)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seleccionAlumnoLayout.createSequentialGroup()
+                .addContainerGap(148, Short.MAX_VALUE)
+                .addComponent(jb_goToMatricular)
+                .addGap(104, 104, 104)
                 .addComponent(jb_realizarExamen)
                 .addGap(46, 46, 46)
                 .addComponent(jb_crearCuadroNotas)
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addGap(93, 93, 93)
+                .addComponent(jb_cerrarSesion)
+                .addGap(27, 27, 27))
         );
 
         lb_tituloPregunta.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
@@ -484,11 +530,11 @@ public class mainPage extends javax.swing.JFrame {
         pantallaExamenLayout.setVerticalGroup(
             pantallaExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pantallaExamenLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
+                .addGap(140, 140, 140)
                 .addComponent(lb_tituloPregunta)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103)
+                .addGap(45, 45, 45)
                 .addGroup(pantallaExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rb_respAlumnoV)
                     .addComponent(rb_respAlumnoF))
@@ -547,6 +593,130 @@ public class mainPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                 .addComponent(jb_crearCategoria)
                 .addGap(56, 56, 56))
+        );
+
+        jb_matricularClase.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jb_matricularClase.setText("Matricular Clase Seleccionada");
+        jb_matricularClase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_matricularClaseActionPerformed(evt);
+            }
+        });
+
+        tb_clasesDisponibles.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 14)); // NOI18N
+        tb_clasesDisponibles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id Clase", "Clase ", "Matricular"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tb_clasesDisponibles);
+
+        jLabel11.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 24)); // NOI18N
+        jLabel11.setText("CLASES DISPONIBLES EN EL SISTEMA");
+
+        javax.swing.GroupLayout pantalla_matriculaLayout = new javax.swing.GroupLayout(pantalla_matricula.getContentPane());
+        pantalla_matricula.getContentPane().setLayout(pantalla_matriculaLayout);
+        pantalla_matriculaLayout.setHorizontalGroup(
+            pantalla_matriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pantalla_matriculaLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantalla_matriculaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pantalla_matriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantalla_matriculaLayout.createSequentialGroup()
+                        .addComponent(jb_matricularClase)
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantalla_matriculaLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(171, 171, 171))))
+        );
+        pantalla_matriculaLayout.setVerticalGroup(
+            pantalla_matriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pantalla_matriculaLayout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jLabel11)
+                .addGap(50, 50, 50)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(jb_matricularClase)
+                .addGap(26, 26, 26))
+        );
+
+        cb_selectorExamenRealizar.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        cb_selectorExamenRealizar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_selectorExamenRealizarItemStateChanged(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 18)); // NOI18N
+        jLabel12.setText("Clases con exámen disponible:");
+
+        jb_comnezarNuevoExamen.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jb_comnezarNuevoExamen.setText("Comenzar");
+        jb_comnezarNuevoExamen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_comnezarNuevoExamenActionPerformed(evt);
+            }
+        });
+
+        jb_goBackExamen.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jb_goBackExamen.setText("Regresar");
+
+        tf_claseExamenRealizar.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 14)); // NOI18N
+
+        javax.swing.GroupLayout pantalla_comienzExamenLayout = new javax.swing.GroupLayout(pantalla_comienzExamen.getContentPane());
+        pantalla_comienzExamen.getContentPane().setLayout(pantalla_comienzExamenLayout);
+        pantalla_comienzExamenLayout.setHorizontalGroup(
+            pantalla_comienzExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pantalla_comienzExamenLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(pantalla_comienzExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pantalla_comienzExamenLayout.createSequentialGroup()
+                        .addGroup(pantalla_comienzExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cb_selectorExamenRealizar, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jb_goBackExamen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addGroup(pantalla_comienzExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tf_claseExamenRealizar, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jb_comnezarNuevoExamen))))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        pantalla_comienzExamenLayout.setVerticalGroup(
+            pantalla_comienzExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pantalla_comienzExamenLayout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addComponent(jLabel12)
+                .addGap(50, 50, 50)
+                .addGroup(pantalla_comienzExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cb_selectorExamenRealizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_claseExamenRealizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(76, 76, 76)
+                .addGroup(pantalla_comienzExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jb_goBackExamen)
+                    .addComponent(jb_comnezarNuevoExamen))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -632,22 +802,45 @@ public class mainPage extends javax.swing.JFrame {
         String user = tf_login.getText();
         ArrayList<String> users = users();
         ArrayList<String> passwords = passwords();
-        if (user.equals("Admin") && verify.equals("admin1234")) {
-            seleccionAdmin.pack();
-            seleccionAdmin.setLocationRelativeTo(this);
-            seleccionAdmin.setVisible(true);
-        } else if (users.contains(user) && passwords.contains(verify)) {
-            seleccionAlumno.pack();
-            seleccionAlumno.setLocationRelativeTo(this);
-            seleccionAlumno.setVisible(true);
+        boolean iniciarSesion = false;
+        if (!alumnosEnSistema.isEmpty()) {
+            for (int i = 0; i < alumnosEnSistema.size(); i++) {
+                if ((user.equals("Admin") && verify.equals("admin1234")) || (alumnosEnSistema.get(i).getLogin().equals(user) && alumnosEnSistema.get(i).getPassword().equals(verify))) {
+                    iniciarSesion = true;
+                    idAlumnoEnSesion = alumnosEnSistema.get(i).getId();
+                    break;
+                }
+            }
+            if (iniciarSesion) {
+                if (user.equals("Admin")) {
+                    seleccionAdmin.pack();
+                    seleccionAdmin.setAlwaysOnTop(true);
+                    seleccionAdmin.setLocationRelativeTo(this);
+                    seleccionAdmin.setVisible(true);
+                } else {
+                    seleccionAlumno.pack();
+                    seleccionAlumno.setAlwaysOnTop(true);
+                    seleccionAlumno.setLocationRelativeTo(this);
+                    seleccionAlumno.setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario y/o contraseña incorrectos");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Usuario y/o contraseña incorrectos");
+            JOptionPane.showMessageDialog(this, "No hay alumnos en el sistema, solamente puede acceder el administrador");
+            if (user.equals("Admin") && verify.equals("admin1234")) {
+                seleccionAdmin.pack();
+                seleccionAdmin.setAlwaysOnTop(true);
+                seleccionAdmin.setLocationRelativeTo(this);
+                seleccionAdmin.setVisible(true);
+            }
         }
     }//GEN-LAST:event_jb_iniciarSesionActionPerformed
 
     private void jb_gotoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoRegistroActionPerformed
         actualizaEstado();
         pantallaRegistro.pack();
+        pantallaRegistro.setAlwaysOnTop(true);
         pantallaRegistro.setLocationRelativeTo(this);
         pantallaRegistro.setVisible(true);
     }//GEN-LAST:event_jb_gotoRegistroActionPerformed
@@ -655,6 +848,7 @@ public class mainPage extends javax.swing.JFrame {
     private void jb_gotoCrearExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoCrearExamenActionPerformed
         actualizaEstado();
         pantallaCrearExamen.pack();
+        pantallaCrearExamen.setAlwaysOnTop(true);
         pantallaCrearExamen.setLocationRelativeTo(this);
         pantallaCrearExamen.setVisible(true);
         cb_selectorClaseParaExamen.removeAllItems();
@@ -674,13 +868,11 @@ public class mainPage extends javax.swing.JFrame {
     private void jb_gotoCrearClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoCrearClaseActionPerformed
         actualizaEstado();
         String nombreClase = JOptionPane.showInputDialog(this, "Ingrese el nombre de la nueva clase: ", "NOMBRE", JOptionPane.INFORMATION_MESSAGE);
-        ArrayList<Clase> ids = ad.cargarClases();
         int opc = JOptionPane.showConfirmDialog(this, "Desea añadir la clase " + nombreClase.toUpperCase() + " al sistema?", "CONFIRMAR", JOptionPane.YES_NO_CANCEL_OPTION);
         switch (opc) {
             case JOptionPane.YES_OPTION:
-                Clase c = new Clase(ids.size() + 1, nombreClase);
+                Clase c = new Clase(clasesEnSistema.size() + 1, nombreClase);
                 c.insertClase();
-                //cn.actualizarAdmin();
                 break;
             case JOptionPane.CANCEL_OPTION:
                 JOptionPane.showMessageDialog(this, "Se cancelo la operacion");
@@ -709,17 +901,28 @@ public class mainPage extends javax.swing.JFrame {
             cb_eleccionClasePregunta.setModel(cbm);
         }
         pantallaCrearPregunta.pack();
+        pantallaCrearPregunta.setAlwaysOnTop(true);
         pantallaCrearPregunta.setLocationRelativeTo(this);
         pantallaCrearPregunta.setVisible(true);
     }//GEN-LAST:event_jb_gotoCrearPreguntaActionPerformed
 
     private void jb_realizarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_realizarExamenActionPerformed
-
+        DefaultComboBoxModel cbm = (DefaultComboBoxModel) cb_selectorExamenRealizar.getModel();
+        cbm.removeAllElements();
+        ArrayList<Integer> idClases = new ArrayList<>();
+        for (Matricula m : registrosEnMatricula) {
+            if (m.getIdAlumno() == idAlumnoEnSesion) {
+                cbm.addElement(m.getIdClaseMatriculada());
+            }
+        }
+        pantalla_comienzExamen.pack();
+        pantalla_comienzExamen.setModal(true);
+        pantalla_comienzExamen.setLocationRelativeTo(null);
+        pantalla_comienzExamen.setVisible(true);
     }//GEN-LAST:event_jb_realizarExamenActionPerformed
 
     private void jb_registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_registroActionPerformed
-        ArrayList<Alumno> idsComprobar = ad.cargarAlumnos();
-        int id = idsComprobar.size() + 1;
+        int id = alumnosEnSistema.size() + 1;
         String login = tf_newLogin.getText();
         String nombre = tf_newName.getText();
         char[] pass = pf_newPassword.getPassword();
@@ -729,11 +932,11 @@ public class mainPage extends javax.swing.JFrame {
         }
         Alumno a = new Alumno(id, nombre, login, aux);
         a.insertAlumno();
+        actualizaEstado();
     }//GEN-LAST:event_jb_registroActionPerformed
 
     private void jb_crearExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_crearExamenActionPerformed
-        ArrayList<Examen> ids = ad.cargarExamenes();
-        int id = ids.size() + 1;
+        int id = examenesEnSistema.size() + 1;
         int idClase = cb_selectorClaseParaExamen.getSelectedIndex() + 1;
         int cantiPreguntas = Integer.parseInt(js_cantPreguntas.getValue().toString());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -745,10 +948,27 @@ public class mainPage extends javax.swing.JFrame {
             cn.actualizarAdmin();
         } catch (Exception ex) {
         }
+        pantallaCrearExamen.setVisible(false);
     }//GEN-LAST:event_jb_crearExamenActionPerformed
 
     private void comenzarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comenzarExamenActionPerformed
-
+        Random r = new Random();
+        int auxForIdClase = Integer.parseInt(cb_selectorExamenRealizar.getSelectedItem().toString());
+        int cantExamenesDeClase = 0;
+        for (int i = 0; i < examenesEnSistema.size(); i++) {
+            if (auxForIdClase == examenesEnSistema.get(i).getIdClase()) {
+                cantExamenesDeClase++;
+            }
+        }
+        if (cantExamenesDeClase != 0) {
+            examenEnUso = r.nextInt(examenesEnSistema.size());
+            while (examenesEnSistema.get(examenEnUso).getIdClase() != auxForIdClase) {
+                examenEnUso = r.nextInt(examenesEnSistema.size());
+            }
+            generadorPreguntaAleatoria(auxForIdClase);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay examanes programados para esta clase");
+        }
     }//GEN-LAST:event_comenzarExamenActionPerformed
 
     private void jb_nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_nextQuestionActionPerformed
@@ -785,11 +1005,13 @@ public class mainPage extends javax.swing.JFrame {
             cn.actualizarAdmin();
         } catch (Exception ex) {
         }
+        pantallaCrearPregunta.setVisible(false);
     }//GEN-LAST:event_jb_crearNuevaPreguntaActionPerformed
 
     private void jb_gotoCrearCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoCrearCategoriaActionPerformed
         actualizaEstado();
         pantallaCrearcategoria.pack();
+        pantallaCrearcategoria.setAlwaysOnTop(true);
         pantallaCrearcategoria.setLocationRelativeTo(this);
         pantallaCrearcategoria.setVisible(true);
         if (clasesEnSistema.isEmpty()) {
@@ -828,7 +1050,87 @@ public class mainPage extends javax.swing.JFrame {
             cn.actualizarAdmin();
         } catch (Exception ex) {
         }
+        pantallaCrearcategoria.setVisible(false);
     }//GEN-LAST:event_jb_crearCategoriaActionPerformed
+
+    private void jb_matriculaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_matriculaAlumnoActionPerformed
+
+    }//GEN-LAST:event_jb_matriculaAlumnoActionPerformed
+
+    private void jb_matricularClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_matricularClaseActionPerformed
+        int idClaseMAtricular = clasesEnSistema.get(tb_clasesDisponibles.getSelectedRow()).getIdClase();
+        Date fechaMatricula = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        for (int i = 0; i < tb_clasesDisponibles.getRowCount(); i++) {
+            if (Boolean.parseBoolean(tb_clasesDisponibles.getValueAt(i, 2).toString()) == true) {
+                Matricula m = new Matricula(idAlumnoEnSesion, (Integer) tb_clasesDisponibles.getValueAt(i, 0), format.format(fechaMatricula));
+                m.insertMatricula();
+                cn.actualizarAdmin();
+                cn.actualizarAlumnos();
+            }
+        }
+    }//GEN-LAST:event_jb_matricularClaseActionPerformed
+
+    private void jb_goToMatricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_goToMatricularActionPerformed
+        actualizaEstado();
+        DefaultTableModel tm = (DefaultTableModel) tb_clasesDisponibles.getModel();
+        while (tm.getRowCount() > 0) {
+            tm.removeRow(0);
+        }
+        if (clasesEnSistema.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No tiene clases disponible para matricular", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            jb_matricularClase.setEnabled(false);
+        } else {
+            for (Clase c : clasesEnSistema) {
+                Object datos[] = new Object[3];
+                datos[0] = c.getIdClase();
+                datos[1] = c.getNombre();
+                datos[2] = false;
+                tm.addRow(datos);
+            }
+            for (int i = 0; i < tm.getRowCount(); i++) {
+                for (Matricula m : registrosEnMatricula) {
+                    if (m.getIdAlumno() == idAlumnoEnSesion && m.getIdClaseMatriculada() == (Integer) tm.getValueAt(i, 0)) {
+                        tm.removeRow(i);
+                    }
+                }
+            }
+            tb_clasesDisponibles.setModel(tm);
+        }
+        pantalla_matricula.pack();
+        pantalla_matricula.setAlwaysOnTop(true);
+        pantalla_matricula.setLocationRelativeTo(null);
+        pantalla_matricula.setVisible(true);
+    }//GEN-LAST:event_jb_goToMatricularActionPerformed
+
+    private void jb_crearCuadroNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_crearCuadroNotasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_crearCuadroNotasActionPerformed
+
+    private void jb_cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cerrarSesionActionPerformed
+        seleccionAlumno.setVisible(false);
+    }//GEN-LAST:event_jb_cerrarSesionActionPerformed
+
+    private void cb_selectorExamenRealizarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_selectorExamenRealizarItemStateChanged
+        try {
+            int identificadorClase = Integer.parseInt(cb_selectorExamenRealizar.getSelectedItem().toString());
+            for (int i = 0; i < clasesEnSistema.size(); i++) {
+                if (identificadorClase == clasesEnSistema.get(i).getIdClase()) {
+                    tf_claseExamenRealizar.setText(clasesEnSistema.get(i).getNombre());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cb_selectorExamenRealizarItemStateChanged
+
+    private void jb_comnezarNuevoExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_comnezarNuevoExamenActionPerformed
+        pantalla_comienzExamen.setVisible(false);
+        pantallaExamen.pack();
+        pantallaExamen.setLocationRelativeTo(null);
+        pantallaExamen.setAlwaysOnTop(true);
+        pantallaExamen.setVisible(true);
+    }//GEN-LAST:event_jb_comnezarNuevoExamenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -871,11 +1173,14 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_selectorCategoria;
     private javax.swing.JComboBox<String> cb_selectorClaseParaExamen;
     private javax.swing.JComboBox<String> cb_selectorClasesCategoria;
+    private javax.swing.JComboBox<String> cb_selectorExamenRealizar;
     private javax.swing.JButton comenzarExamen;
     private com.toedter.calendar.JDateChooser dc_fechaExamen;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -886,10 +1191,15 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JToggleButton jb_cerrarSesion;
+    private javax.swing.JButton jb_comnezarNuevoExamen;
     private javax.swing.JButton jb_crearCategoria;
     private javax.swing.JButton jb_crearCuadroNotas;
     private javax.swing.JButton jb_crearExamen;
     private javax.swing.JButton jb_crearNuevaPregunta;
+    private javax.swing.JButton jb_goBackExamen;
+    private javax.swing.JButton jb_goToMatricular;
     private javax.swing.JButton jb_gotoCrearCategoria;
     private javax.swing.JButton jb_gotoCrearClase;
     private javax.swing.JButton jb_gotoCrearExamen;
@@ -897,6 +1207,7 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JButton jb_gotoRegistro;
     private javax.swing.JButton jb_iniciarSesion;
     private javax.swing.JButton jb_listarClases;
+    private javax.swing.JButton jb_matricularClase;
     private javax.swing.JButton jb_nextQuestion;
     private javax.swing.JButton jb_realizarExamen;
     private javax.swing.JButton jb_registro;
@@ -912,6 +1223,8 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JFrame pantallaCrearcategoria;
     private javax.swing.JFrame pantallaExamen;
     private javax.swing.JFrame pantallaRegistro;
+    private javax.swing.JDialog pantalla_comienzExamen;
+    private javax.swing.JFrame pantalla_matricula;
     private javax.swing.JPasswordField pf_confirmNewPassword;
     private javax.swing.JPasswordField pf_newPassword;
     private javax.swing.JPasswordField pf_passLogin;
@@ -925,7 +1238,9 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JFrame seleccionAlumno;
     private javax.swing.JTextArea ta_descrpNuevaPregunta;
     private javax.swing.JTextArea ta_descrpPregunta;
+    private javax.swing.JTable tb_clasesDisponibles;
     private javax.swing.JTextField tf_NombreCategoria;
+    private javax.swing.JTextField tf_claseExamenRealizar;
     private javax.swing.JTextField tf_login;
     private javax.swing.JTextField tf_newLogin;
     private javax.swing.JTextField tf_newName;
@@ -938,6 +1253,9 @@ public class mainPage extends javax.swing.JFrame {
     private ArrayList<Alumno> alumnosEnSistema = new ArrayList<>();
     private ArrayList<Categoria> categoriasEnSistema = new ArrayList<>();
     private ArrayList<Pregunta> prefuntaEnSistema = new ArrayList<>();
+    private ArrayList<Matricula> registrosEnMatricula = new ArrayList<>();
+    private int idAlumnoEnSesion = 0;
+    int examenEnUso = 0;
 
     private ArrayList<String> titulos;
     private ArrayList<String> descrps;
@@ -948,7 +1266,6 @@ public class mainPage extends javax.swing.JFrame {
     private int codClase;
     private int puntaje = 0;
     boolean comenzarTerminar = true;
-    int examenEnUso = 0;
     int contadorPreguntasRespondidas = 0;
     int contadorTotalPreguntas = 0;
     boolean flag = false;
@@ -959,12 +1276,28 @@ public class mainPage extends javax.swing.JFrame {
         alumnosEnSistema.clear();
         categoriasEnSistema.clear();
         prefuntaEnSistema.clear();
+        registrosEnMatricula.clear();
 
         clasesEnSistema = ad.cargarClases();
         examenesEnSistema = ad.cargarExamenes();
         alumnosEnSistema = ad.cargarAlumnos();
         categoriasEnSistema = ad.cargarCategorias();
         prefuntaEnSistema = ad.cargarPreguntas();
+        registrosEnMatricula = ad.cargarMatricula();
+    }
+
+    public void generadorPreguntaAleatoria(int clase) {
+        if (!prefuntaEnSistema.isEmpty()) {
+            Random r = new Random();
+            int preguntaRandom = r.nextInt(prefuntaEnSistema.size());
+            Pregunta p = prefuntaEnSistema.get(preguntaRandom);
+            while (p.getIdClase() != clase) {
+                preguntaRandom = r.nextInt(prefuntaEnSistema.size());
+                p = prefuntaEnSistema.get(preguntaRandom);
+            }
+            lb_tituloPregunta.setText(p.getTitulo());
+            ta_descrpPregunta.setText(p.getDescrpcion());
+        }
     }
 
     public ArrayList<String> users() {

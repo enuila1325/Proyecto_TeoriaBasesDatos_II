@@ -22,6 +22,7 @@ public class Administrador {
     private final ArrayList<Pregunta> preguntasEnSistema = new ArrayList<>();
     private final ArrayList<Clase> clasesEnSistema = new ArrayList<>();
     private final ArrayList<ResultadoExamen> resultadosEnSistema = new ArrayList<>();
+    private final ArrayList<Matricula> matriculas = new ArrayList<>();
 
     public ArrayList<Alumno> cargarAlumnos() {
 
@@ -30,12 +31,8 @@ public class Administrador {
                     -> {
                 Result result = tx.run("MATCH (a: Alumno) RETURN a.id, a.login, a.nombre, a.password ORDER BY a.id DESC");
                 while (result.hasNext()) {
-                    int id = Integer.parseInt(result.next().get(0).asObject().toString());
-                    String login = result.next().get(1).asObject().toString();
-                    String nombre = result.next().get(2).asObject().toString();
-                    String password = result.next().get(3).asObject().toString();
-                    Alumno a = new Alumno(id, nombre, login, password);
-                    alumnosEnSistema.add(a);
+                    Record r = result.next();
+                    alumnosEnSistema.add(mapToAlumno(r));
                 }
                 return alumnosEnSistema;
             });
@@ -118,6 +115,20 @@ public class Administrador {
         }
     }
 
+    public ArrayList<Matricula> cargarMatricula() {
+        try (Session session = driver.session()) {
+            return session.readTransaction(tx
+                    -> {
+                Result result = tx.run("MATCH (m: Matricula) RETURN m.idAlumno, m.idClaseMatriculada, m.fechaMatricula;");
+                while (result.hasNext()) {
+                    Record r = result.next();
+                    matriculas.add(mapToMatricula(r));
+                }
+                return matriculas;
+            });
+        }
+    }
+
     public Clase mapToClase(Record record) {
         Clase c = new Clase();
         c.setIdClase(record.get("c.idClase").asInt());
@@ -185,5 +196,18 @@ public class Administrador {
         c.setIdClase(record.get("c.idClase").asInt());
         c.setNombreCategoria(record.get("c.nombreCategoria").asString());
         return c;
+    }
+
+    public Matricula mapToMatricula(Record r) {
+        Matricula m = new Matricula();
+        m.setIdAlumno(r.get("m.idAlumno").asInt());
+        m.setIdClaseMatriculada(r.get("m.idClaseMatriculada").asInt());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate date = r.get("m.fechaMatricula").asLocalDate();
+        Date fecha = Date.from(date.atStartOfDay(defaultZoneId).toInstant());
+        String fechaMatricula = format.format(fecha);
+        m.setFechaMatricula(fechaMatricula);
+        return m;
     }
 }
