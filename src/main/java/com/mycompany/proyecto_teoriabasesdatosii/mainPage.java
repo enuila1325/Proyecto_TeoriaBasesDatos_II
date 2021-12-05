@@ -82,7 +82,7 @@ public class mainPage extends javax.swing.JFrame {
         rb_respAlumnoF = new javax.swing.JRadioButton();
         jb_nextQuestion = new javax.swing.JButton();
         comenzarExamen = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jb_terminarExamen = new javax.swing.JButton();
         respuestaAlumno = new javax.swing.ButtonGroup();
         pantallaCrearcategoria = new javax.swing.JFrame();
         jLabel5 = new javax.swing.JLabel();
@@ -100,6 +100,9 @@ public class mainPage extends javax.swing.JFrame {
         jb_comnezarNuevoExamen = new javax.swing.JButton();
         jb_goBackExamen = new javax.swing.JButton();
         tf_claseExamenRealizar = new javax.swing.JTextField();
+        jdialog_cuadroNotas = new javax.swing.JDialog();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         labelLogin = new javax.swing.JLabel();
         tf_login = new javax.swing.JTextField();
         pf_passLogin = new javax.swing.JPasswordField();
@@ -495,10 +498,11 @@ public class mainPage extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Terminar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jb_terminarExamen.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 14)); // NOI18N
+        jb_terminarExamen.setText("Terminar");
+        jb_terminarExamen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jb_terminarExamenActionPerformed(evt);
             }
         });
 
@@ -524,7 +528,7 @@ public class mainPage extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(comenzarExamen)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(jb_terminarExamen)
                 .addGap(32, 32, 32))
         );
         pantallaExamenLayout.setVerticalGroup(
@@ -538,12 +542,12 @@ public class mainPage extends javax.swing.JFrame {
                 .addGroup(pantallaExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rb_respAlumnoV)
                     .addComponent(rb_respAlumnoF))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(jb_nextQuestion)
                 .addGap(18, 18, 18)
                 .addGroup(pantallaExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(comenzarExamen, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(jb_terminarExamen))
                 .addGap(25, 25, 25))
         );
 
@@ -717,6 +721,49 @@ public class mainPage extends javax.swing.JFrame {
                     .addComponent(jb_goBackExamen)
                     .addComponent(jb_comnezarNuevoExamen))
                 .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        jTable1.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 14)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Clase", "Resultado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jdialog_cuadroNotasLayout = new javax.swing.GroupLayout(jdialog_cuadroNotas.getContentPane());
+        jdialog_cuadroNotas.getContentPane().setLayout(jdialog_cuadroNotasLayout);
+        jdialog_cuadroNotasLayout.setHorizontalGroup(
+            jdialog_cuadroNotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdialog_cuadroNotasLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+        jdialog_cuadroNotasLayout.setVerticalGroup(
+            jdialog_cuadroNotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdialog_cuadroNotasLayout.createSequentialGroup()
+                .addContainerGap(93, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -915,6 +962,7 @@ public class mainPage extends javax.swing.JFrame {
                 cbm.addElement(m.getIdClaseMatriculada());
             }
         }
+        jb_nextQuestion.setEnabled(false);
         pantalla_comienzExamen.pack();
         pantalla_comienzExamen.setModal(true);
         pantalla_comienzExamen.setLocationRelativeTo(null);
@@ -953,31 +1001,45 @@ public class mainPage extends javax.swing.JFrame {
 
     private void comenzarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comenzarExamenActionPerformed
         Random r = new Random();
-        int auxForIdClase = Integer.parseInt(cb_selectorExamenRealizar.getSelectedItem().toString());
+        codClase = Integer.parseInt(cb_selectorExamenRealizar.getSelectedItem().toString());
         int cantExamenesDeClase = 0;
         for (int i = 0; i < examenesEnSistema.size(); i++) {
-            if (auxForIdClase == examenesEnSistema.get(i).getIdClase()) {
+            if (codClase == examenesEnSistema.get(i).getIdClase()) {
                 cantExamenesDeClase++;
             }
         }
         if (cantExamenesDeClase != 0) {
             examenEnUso = r.nextInt(examenesEnSistema.size());
-            while (examenesEnSistema.get(examenEnUso).getIdClase() != auxForIdClase) {
+            while (examenesEnSistema.get(examenEnUso).getIdClase() != codClase) {
                 examenEnUso = r.nextInt(examenesEnSistema.size());
             }
-            generadorPreguntaAleatoria(auxForIdClase);
+            contadorTotalPreguntas = examenesEnSistema.get(examenEnUso).getCantPreguntas();
+            contadorPreguntasRespondidas = 0;
+            generadorPreguntaAleatoria();
+            comenzarExamen.setEnabled(false);
+            jb_nextQuestion.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(null, "No hay examanes programados para esta clase");
         }
     }//GEN-LAST:event_comenzarExamenActionPerformed
 
     private void jb_nextQuestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_nextQuestionActionPerformed
-
+        contadorPreguntasRespondidas++;
+        generadorPreguntaAleatoria();
     }//GEN-LAST:event_jb_nextQuestionActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jb_terminarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_terminarExamenActionPerformed
+        System.out.println(idsPreguntasEnExamen.size());
+        System.out.println(respsDadas.size());
+        System.out.println(examenesEnSistema.get(examenEnUso).getIdExamen());
+        System.out.println(idAlumnoEnSesion);
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+        ResultadoExamen r = new ResultadoExamen(idAlumnoEnSesion, examenesEnSistema.get(examenEnUso).getIdExamen(), nota);
+        r.setIdPreguntas(idsPreguntasEnExamen);
+        r.setRespuestasDadas(respsDadas);
+        r.insertResultado();
+        cn.actualizarAlumnos();
+    }//GEN-LAST:event_jb_terminarExamenActionPerformed
 
     private void jb_crearNuevaPreguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_crearNuevaPreguntaActionPerformed
         String titulo = tf_tituloNuevPregunta.getText();
@@ -1104,7 +1166,7 @@ public class mainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_goToMatricularActionPerformed
 
     private void jb_crearCuadroNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_crearCuadroNotasActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jb_crearCuadroNotasActionPerformed
 
     private void jb_cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cerrarSesionActionPerformed
@@ -1176,7 +1238,6 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cb_selectorExamenRealizar;
     private javax.swing.JButton comenzarExamen;
     private com.toedter.calendar.JDateChooser dc_fechaExamen;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1192,6 +1253,8 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jb_cerrarSesion;
     private javax.swing.JButton jb_comnezarNuevoExamen;
     private javax.swing.JButton jb_crearCategoria;
@@ -1211,6 +1274,8 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JButton jb_nextQuestion;
     private javax.swing.JButton jb_realizarExamen;
     private javax.swing.JButton jb_registro;
+    private javax.swing.JButton jb_terminarExamen;
+    private javax.swing.JDialog jdialog_cuadroNotas;
     private javax.swing.JSpinner js_cantPreguntas;
     private javax.swing.JLabel labelLogin;
     private javax.swing.JLabel labelNewLogin;
@@ -1253,21 +1318,18 @@ public class mainPage extends javax.swing.JFrame {
     private ArrayList<Alumno> alumnosEnSistema = new ArrayList<>();
     private ArrayList<Categoria> categoriasEnSistema = new ArrayList<>();
     private ArrayList<Pregunta> prefuntaEnSistema = new ArrayList<>();
+    private ArrayList<ResultadoExamen> resultadosAlumnos = new ArrayList<>();
     private ArrayList<Matricula> registrosEnMatricula = new ArrayList<>();
-    private int idAlumnoEnSesion = 0;
-    int examenEnUso = 0;
-
-    private ArrayList<String> titulos;
-    private ArrayList<String> descrps;
-    private ArrayList<Boolean> resps;
-    private ArrayList<Integer> idsGeneral;
+    private ArrayList<Integer> idsPreguntasEnExamen = new ArrayList<>();
     private ArrayList<Boolean> respsDadas = new ArrayList<>();
-    private ArrayList<Integer> idsPregResp = new ArrayList<>();
+    private int idAlumnoEnSesion = 0;
+    private int contadorPreguntasRespondidas = 0;
+    private int contadorTotalPreguntas = 0;
+    private int examenEnUso = 0;
     private int codClase;
-    private int puntaje = 0;
+    private int nota = 0;
+
     boolean comenzarTerminar = true;
-    int contadorPreguntasRespondidas = 0;
-    int contadorTotalPreguntas = 0;
     boolean flag = false;
 
     public void actualizaEstado() {
@@ -1277,6 +1339,7 @@ public class mainPage extends javax.swing.JFrame {
         categoriasEnSistema.clear();
         prefuntaEnSistema.clear();
         registrosEnMatricula.clear();
+        resultadosAlumnos.clear();
 
         clasesEnSistema = ad.cargarClases();
         examenesEnSistema = ad.cargarExamenes();
@@ -1284,19 +1347,56 @@ public class mainPage extends javax.swing.JFrame {
         categoriasEnSistema = ad.cargarCategorias();
         prefuntaEnSistema = ad.cargarPreguntas();
         registrosEnMatricula = ad.cargarMatricula();
+        resultadosAlumnos = ad.cargarResultados();
     }
 
-    public void generadorPreguntaAleatoria(int clase) {
+    public void generadorPreguntaAleatoria() {
         if (!prefuntaEnSistema.isEmpty()) {
             Random r = new Random();
             int preguntaRandom = r.nextInt(prefuntaEnSistema.size());
             Pregunta p = prefuntaEnSistema.get(preguntaRandom);
-            while (p.getIdClase() != clase) {
+            while (p.getIdClase() != codClase) {
                 preguntaRandom = r.nextInt(prefuntaEnSistema.size());
                 p = prefuntaEnSistema.get(preguntaRandom);
             }
-            lb_tituloPregunta.setText(p.getTitulo());
-            ta_descrpPregunta.setText(p.getDescrpcion());
+            if (contadorPreguntasRespondidas == contadorTotalPreguntas) {
+                if (rb_respAlumnoV.isSelected()) {
+                    respsDadas.add(true);
+                    if (p.isRespuesta() == true) {
+                        nota += 5;
+                    }
+                } else if (rb_respAlumnoF.isSelected()) {
+                    respsDadas.add(false);
+                    if (p.isRespuesta() == false) {
+                        nota += 5;
+                    }
+                } else {
+                    respsDadas.add(null);
+                }
+                idsPreguntasEnExamen.add(p.getIdPregunta());
+
+            } else if (contadorPreguntasRespondidas < contadorTotalPreguntas) {
+                lb_tituloPregunta.setText(p.getTitulo());
+                ta_descrpPregunta.setText(p.getDescrpcion());
+                if (contadorPreguntasRespondidas != 0) {
+                    if (rb_respAlumnoV.isSelected()) {
+                        respsDadas.add(true);
+                        if (p.isRespuesta() == true) {
+                            nota += 5;
+                        }
+                    } else if (rb_respAlumnoF.isSelected()) {
+                        respsDadas.add(false);
+                        if (p.isRespuesta() == false) {
+                            nota += 5;
+                        }
+                    } else {
+                        respsDadas.add(null);
+                    }
+                    idsPreguntasEnExamen.add(p.getIdPregunta());
+                }
+            } else {
+                jb_nextQuestion.setEnabled(false);
+            }
         }
     }
 
