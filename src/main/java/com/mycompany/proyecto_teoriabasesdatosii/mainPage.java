@@ -24,6 +24,7 @@ public class mainPage extends javax.swing.JFrame {
         categoriasEnSistema = ad.cargarCategorias();
         prefuntaEnSistema = ad.cargarPreguntas();
         registrosEnMatricula = ad.cargarMatricula();
+        resultadosAlumnos = ad.cargarResultados();
     }
 
     @SuppressWarnings("unchecked")
@@ -54,6 +55,7 @@ public class mainPage extends javax.swing.JFrame {
         jb_gotoCrearPregunta = new javax.swing.JButton();
         jb_listarClases = new javax.swing.JButton();
         jb_gotoCrearCategoria = new javax.swing.JButton();
+        goto_CentroCalificaciones = new javax.swing.JButton();
         pantallaCrearPregunta = new javax.swing.JFrame();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -102,7 +104,20 @@ public class mainPage extends javax.swing.JFrame {
         tf_claseExamenRealizar = new javax.swing.JTextField();
         jdialog_cuadroNotas = new javax.swing.JDialog();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jt_notasAlumno = new javax.swing.JTable();
+        list_ExamenPorClase = new javax.swing.JFrame();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jt_listExamenes = new javax.swing.JTable();
+        cb_selectClaseListExamen = new javax.swing.JComboBox<>();
+        got_verCategorias = new javax.swing.JButton();
+        list_Categorias = new javax.swing.JFrame();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tb_listPReguntasCategoria = new javax.swing.JTable();
+        cb_SelectorCategoriaList = new javax.swing.JComboBox<>();
+        centroCalificaciones = new javax.swing.JFrame();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tb_CentroDeNotas = new javax.swing.JTable();
+        cb_filtroClasesNotas = new javax.swing.JComboBox<>();
         labelLogin = new javax.swing.JLabel();
         tf_login = new javax.swing.JTextField();
         pf_passLogin = new javax.swing.JPasswordField();
@@ -262,7 +277,12 @@ public class mainPage extends javax.swing.JFrame {
         });
 
         jb_listarClases.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
-        jb_listarClases.setText("Listar clases con sus examenes");
+        jb_listarClases.setText("VER CLASES");
+        jb_listarClases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_listarClasesActionPerformed(evt);
+            }
+        });
 
         jb_gotoCrearCategoria.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
         jb_gotoCrearCategoria.setText("CREAR CATEGORÍA");
@@ -272,28 +292,36 @@ public class mainPage extends javax.swing.JFrame {
             }
         });
 
+        goto_CentroCalificaciones.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        goto_CentroCalificaciones.setText("Ir a Centro de Calificaciones");
+        goto_CentroCalificaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goto_CentroCalificacionesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout seleccionAdminLayout = new javax.swing.GroupLayout(seleccionAdmin.getContentPane());
         seleccionAdmin.getContentPane().setLayout(seleccionAdminLayout);
         seleccionAdminLayout.setHorizontalGroup(
             seleccionAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(seleccionAdminLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(100, Short.MAX_VALUE)
                 .addGroup(seleccionAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(seleccionAdminLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(seleccionAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jb_gotoCrearExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jb_gotoCrearClase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jb_gotoCrearCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jb_gotoCrearPregunta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jb_listarClases, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(seleccionAdminLayout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addGroup(seleccionAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jb_gotoCrearExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jb_gotoCrearClase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jb_gotoCrearCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(117, Short.MAX_VALUE))
+                    .addComponent(jb_listarClases, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                    .addComponent(goto_CentroCalificaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         seleccionAdminLayout.setVerticalGroup(
             seleccionAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(seleccionAdminLayout.createSequentialGroup()
-                .addGap(195, 195, 195)
+                .addGap(97, 97, 97)
                 .addComponent(jb_gotoCrearExamen)
                 .addGap(31, 31, 31)
                 .addComponent(jb_gotoCrearClase)
@@ -303,7 +331,9 @@ public class mainPage extends javax.swing.JFrame {
                 .addComponent(jb_gotoCrearPregunta)
                 .addGap(43, 43, 43)
                 .addComponent(jb_listarClases)
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addComponent(goto_CentroCalificaciones)
+                .addGap(76, 76, 76))
         );
 
         jLabel6.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
@@ -643,7 +673,7 @@ public class mainPage extends javax.swing.JFrame {
             .addGroup(pantalla_matriculaLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantalla_matriculaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pantalla_matriculaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -723,8 +753,8 @@ public class mainPage extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        jTable1.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jt_notasAlumno.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 14)); // NOI18N
+        jt_notasAlumno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -747,7 +777,7 @@ public class mainPage extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable1);
+        jScrollPane4.setViewportView(jt_notasAlumno);
 
         javax.swing.GroupLayout jdialog_cuadroNotasLayout = new javax.swing.GroupLayout(jdialog_cuadroNotas.getContentPane());
         jdialog_cuadroNotas.getContentPane().setLayout(jdialog_cuadroNotasLayout);
@@ -764,6 +794,174 @@ public class mainPage extends javax.swing.JFrame {
                 .addContainerGap(93, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
+        );
+
+        jt_listExamenes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Exámen", "Cant Preguntas", "Fecha a Realizar"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(jt_listExamenes);
+
+        cb_selectClaseListExamen.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_selectClaseListExamenItemStateChanged(evt);
+            }
+        });
+
+        got_verCategorias.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        got_verCategorias.setText("Ver Categorías");
+        got_verCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                got_verCategoriasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout list_ExamenPorClaseLayout = new javax.swing.GroupLayout(list_ExamenPorClase.getContentPane());
+        list_ExamenPorClase.getContentPane().setLayout(list_ExamenPorClaseLayout);
+        list_ExamenPorClaseLayout.setHorizontalGroup(
+            list_ExamenPorClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(list_ExamenPorClaseLayout.createSequentialGroup()
+                .addGap(99, 99, 99)
+                .addGroup(list_ExamenPorClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(got_verCategorias)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_selectClaseListExamen, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(100, Short.MAX_VALUE))
+        );
+        list_ExamenPorClaseLayout.setVerticalGroup(
+            list_ExamenPorClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, list_ExamenPorClaseLayout.createSequentialGroup()
+                .addContainerGap(62, Short.MAX_VALUE)
+                .addComponent(cb_selectClaseListExamen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(got_verCategorias)
+                .addGap(40, 40, 40))
+        );
+
+        tb_listPReguntasCategoria.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 14)); // NOI18N
+        tb_listPReguntasCategoria.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID Pregunta", "Titulo", "Descripcion", "Respuesta"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(tb_listPReguntasCategoria);
+
+        cb_SelectorCategoriaList.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_SelectorCategoriaListItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout list_CategoriasLayout = new javax.swing.GroupLayout(list_Categorias.getContentPane());
+        list_Categorias.getContentPane().setLayout(list_CategoriasLayout);
+        list_CategoriasLayout.setHorizontalGroup(
+            list_CategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(list_CategoriasLayout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(list_CategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_SelectorCategoriaList, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+        list_CategoriasLayout.setVerticalGroup(
+            list_CategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(list_CategoriasLayout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(cb_SelectorCategoriaList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        tb_CentroDeNotas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Alumno", "Clase", "Nota"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane7.setViewportView(tb_CentroDeNotas);
+
+        cb_filtroClasesNotas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_filtroClasesNotasItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout centroCalificacionesLayout = new javax.swing.GroupLayout(centroCalificaciones.getContentPane());
+        centroCalificaciones.getContentPane().setLayout(centroCalificacionesLayout);
+        centroCalificacionesLayout.setHorizontalGroup(
+            centroCalificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, centroCalificacionesLayout.createSequentialGroup()
+                .addContainerGap(58, Short.MAX_VALUE)
+                .addGroup(centroCalificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cb_filtroClasesNotas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51))
+        );
+        centroCalificacionesLayout.setVerticalGroup(
+            centroCalificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, centroCalificacionesLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(cb_filtroClasesNotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -954,9 +1152,9 @@ public class mainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_gotoCrearPreguntaActionPerformed
 
     private void jb_realizarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_realizarExamenActionPerformed
+        actualizaEstado();
         DefaultComboBoxModel cbm = (DefaultComboBoxModel) cb_selectorExamenRealizar.getModel();
         cbm.removeAllElements();
-        ArrayList<Integer> idClases = new ArrayList<>();
         for (Matricula m : registrosEnMatricula) {
             if (m.getIdAlumno() == idAlumnoEnSesion) {
                 cbm.addElement(m.getIdClaseMatriculada());
@@ -980,6 +1178,8 @@ public class mainPage extends javax.swing.JFrame {
         }
         Alumno a = new Alumno(id, nombre, login, aux);
         a.insertAlumno();
+        pantallaRegistro.setVisible(false);
+        JOptionPane.showMessageDialog(null, "Registro realizado");
         actualizaEstado();
     }//GEN-LAST:event_jb_registroActionPerformed
 
@@ -997,6 +1197,7 @@ public class mainPage extends javax.swing.JFrame {
         } catch (Exception ex) {
         }
         pantallaCrearExamen.setVisible(false);
+        JOptionPane.showMessageDialog(null, "Examen ingresado al sistema");
     }//GEN-LAST:event_jb_crearExamenActionPerformed
 
     private void comenzarExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comenzarExamenActionPerformed
@@ -1038,6 +1239,7 @@ public class mainPage extends javax.swing.JFrame {
         r.setIdPreguntas(idsPreguntasEnExamen);
         r.setRespuestasDadas(respsDadas);
         r.insertResultado();
+        JOptionPane.showMessageDialog(null, "Su nota final es de: " + nota, "EXAMEN TERMINADO", JOptionPane.INFORMATION_MESSAGE);
         cn.actualizarAlumnos();
     }//GEN-LAST:event_jb_terminarExamenActionPerformed
 
@@ -1068,6 +1270,7 @@ public class mainPage extends javax.swing.JFrame {
         } catch (Exception ex) {
         }
         pantallaCrearPregunta.setVisible(false);
+        JOptionPane.showMessageDialog(null, "Pregunta insertada al sistema");
     }//GEN-LAST:event_jb_crearNuevaPreguntaActionPerformed
 
     private void jb_gotoCrearCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_gotoCrearCategoriaActionPerformed
@@ -1113,6 +1316,7 @@ public class mainPage extends javax.swing.JFrame {
         } catch (Exception ex) {
         }
         pantallaCrearcategoria.setVisible(false);
+        JOptionPane.showMessageDialog(null, "Categoria insertada al sistema");
     }//GEN-LAST:event_jb_crearCategoriaActionPerformed
 
     private void jb_matriculaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_matriculaAlumnoActionPerformed
@@ -1123,14 +1327,32 @@ public class mainPage extends javax.swing.JFrame {
         int idClaseMAtricular = clasesEnSistema.get(tb_clasesDisponibles.getSelectedRow()).getIdClase();
         Date fechaMatricula = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        int cantClasesMatriculadas = 0;
+        DefaultTableModel tm = (DefaultTableModel) tb_clasesDisponibles.getModel();
         for (int i = 0; i < tb_clasesDisponibles.getRowCount(); i++) {
             if (Boolean.parseBoolean(tb_clasesDisponibles.getValueAt(i, 2).toString()) == true) {
                 Matricula m = new Matricula(idAlumnoEnSesion, (Integer) tb_clasesDisponibles.getValueAt(i, 0), format.format(fechaMatricula));
                 m.insertMatricula();
                 cn.actualizarAdmin();
                 cn.actualizarAlumnos();
+                cantClasesMatriculadas++;
             }
         }
+        if (cantClasesMatriculadas == tm.getRowCount()) {
+            while (tm.getRowCount() > 0) {
+                tm.removeRow(0);
+            }
+        } else {
+            for (int i = 0; i < tb_clasesDisponibles.getRowCount(); i++) {
+                if (Boolean.parseBoolean(tb_clasesDisponibles.getValueAt(i, 2).toString()) == true) {
+                    tm.removeRow(i);
+                }
+            }
+        }
+        tb_clasesDisponibles.setModel(tm);
+        pantalla_matricula.setVisible(false);
+        actualizaEstado();
+        JOptionPane.showMessageDialog(null, "Clase(s) matriculada(s) con exito.");
     }//GEN-LAST:event_jb_matricularClaseActionPerformed
 
     private void jb_goToMatricularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_goToMatricularActionPerformed
@@ -1140,7 +1362,7 @@ public class mainPage extends javax.swing.JFrame {
             tm.removeRow(0);
         }
         if (clasesEnSistema.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No tiene clases disponible para matricular", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No hay clases en el sistema disponibles para matricular", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             jb_matricularClase.setEnabled(false);
         } else {
             for (Clase c : clasesEnSistema) {
@@ -1157,20 +1379,66 @@ public class mainPage extends javax.swing.JFrame {
                     }
                 }
             }
+            for (Matricula m : registrosEnMatricula) {
+                if (tm.getRowCount() == 1 && m.getIdAlumno() == idAlumnoEnSesion && m.getIdClaseMatriculada() == (Integer) tm.getValueAt(0, 0)) {
+                    tm.removeRow(0);
+                }
+            }
             tb_clasesDisponibles.setModel(tm);
         }
         pantalla_matricula.pack();
         pantalla_matricula.setAlwaysOnTop(true);
         pantalla_matricula.setLocationRelativeTo(null);
         pantalla_matricula.setVisible(true);
+        jb_matricularClase.setEnabled(true);
+        if (tb_clasesDisponibles.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "No tienes mas clases disponibles a matricular");
+            jb_matricularClase.setEnabled(false);
+        }
     }//GEN-LAST:event_jb_goToMatricularActionPerformed
 
     private void jb_crearCuadroNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_crearCuadroNotasActionPerformed
-        
+        actualizaEstado();
+        DefaultTableModel tm = (DefaultTableModel) jt_notasAlumno.getModel();
+        String nombre = "";
+        while (tm.getRowCount() > 0) {
+            tm.removeRow(0);
+        }
+        for (Alumno a : alumnosEnSistema) {
+            if (a.getId() == idAlumnoEnSesion) {
+                nombre = a.getNombre();
+                break;
+            }
+        }
+        for (ResultadoExamen r : resultadosAlumnos) {
+            if (r.getIdAlumno() == idAlumnoEnSesion) {
+                Object datos[] = new Object[3];
+                datos[0] = nombre;
+                int claseAux = 0;
+                for (Examen e : examenesEnSistema) {
+                    if (e.getIdExamen() == r.getIdExamen()) {
+                        claseAux = e.getIdClase();
+                    }
+                }
+                for (Clase c : clasesEnSistema) {
+                    if (c.getIdClase() == claseAux) {
+                        datos[1] = c.getNombre();
+                    }
+                }
+                datos[2] = r.getNotaFinal();
+                tm.addRow(datos);
+            }
+        }
+        jt_notasAlumno.setModel(tm);
+        jdialog_cuadroNotas.pack();
+        jdialog_cuadroNotas.setModal(true);
+        jdialog_cuadroNotas.setLocationRelativeTo(null);
+        jdialog_cuadroNotas.setVisible(true);
     }//GEN-LAST:event_jb_crearCuadroNotasActionPerformed
 
     private void jb_cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cerrarSesionActionPerformed
         seleccionAlumno.setVisible(false);
+        idAlumnoEnSesion = -1;
     }//GEN-LAST:event_jb_cerrarSesionActionPerformed
 
     private void cb_selectorExamenRealizarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_selectorExamenRealizarItemStateChanged
@@ -1187,12 +1455,194 @@ public class mainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_selectorExamenRealizarItemStateChanged
 
     private void jb_comnezarNuevoExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_comnezarNuevoExamenActionPerformed
-        pantalla_comienzExamen.setVisible(false);
-        pantallaExamen.pack();
-        pantallaExamen.setLocationRelativeTo(null);
-        pantallaExamen.setAlwaysOnTop(true);
-        pantallaExamen.setVisible(true);
+        boolean yaRealizoExamen = false;
+        int auxClase = Integer.parseInt(cb_selectorExamenRealizar.getSelectedItem().toString());
+        for (ResultadoExamen r : resultadosAlumnos) {
+            for (Examen e : examenesEnSistema) {
+                if (r.getIdAlumno() == idAlumnoEnSesion && e.getIdClase() == auxClase && e.getIdExamen() == r.getIdExamen()) {
+                    yaRealizoExamen = true;
+                }
+            }
+        }
+        if (yaRealizoExamen) {
+            JOptionPane.showMessageDialog(null, "Ya ha realizado examen de esta clase. Solamente puede tomar un (1) examen por clase.");
+        } else {
+            pantalla_comienzExamen.setVisible(false);
+            pantallaExamen.pack();
+            pantallaExamen.setLocationRelativeTo(null);
+            pantallaExamen.setAlwaysOnTop(true);
+            pantallaExamen.setVisible(true);
+        }
     }//GEN-LAST:event_jb_comnezarNuevoExamenActionPerformed
+
+    private void jb_listarClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_listarClasesActionPerformed
+        try {
+            DefaultComboBoxModel cbm = (DefaultComboBoxModel) cb_selectClaseListExamen.getModel();
+            cbm.removeAllElements();
+            for (int i = 0; i < clasesEnSistema.size(); i++) {
+                cbm.addElement(clasesEnSistema.get(i).getNombre());
+            }
+            cb_selectClaseListExamen.setModel(cbm);
+            list_ExamenPorClase.pack();
+            list_ExamenPorClase.setLocationRelativeTo(null);
+            list_ExamenPorClase.setAlwaysOnTop(true);
+            list_ExamenPorClase.setVisible(true);
+        } catch (Exception ex) {
+        }
+    }//GEN-LAST:event_jb_listarClasesActionPerformed
+
+    private void cb_selectClaseListExamenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_selectClaseListExamenItemStateChanged
+        try {
+            actualizaEstado();
+            String claseNombre = cb_selectClaseListExamen.getSelectedItem().toString();
+            DefaultTableModel tm = (DefaultTableModel) jt_listExamenes.getModel();
+            while (tm.getRowCount() > 0) {
+                tm.removeRow(0);
+            }
+            int idAux = 0;
+            for (Clase c : clasesEnSistema) {
+                if (claseNombre.equals(c.getNombre())) {
+                    idAux = c.getIdClase();
+                }
+            }
+            for (Examen e : examenesEnSistema) {
+                if (e.getIdClase() == idAux) {
+                    Object datos[] = new Object[3];
+                    datos[0] = e.getIdExamen();
+                    datos[1] = e.getCantPreguntas();
+                    datos[2] = e.getFechaRealizacion();
+                    tm.addRow(datos);
+                }
+            }
+            jt_listExamenes.setModel(tm);
+        } catch (Exception ex) {
+        }
+    }//GEN-LAST:event_cb_selectClaseListExamenItemStateChanged
+
+    private void got_verCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_got_verCategoriasActionPerformed
+        String id = cb_selectClaseListExamen.getSelectedItem().toString();
+        int auxId = 0;
+        DefaultComboBoxModel cbm = (DefaultComboBoxModel) cb_SelectorCategoriaList.getModel();
+        cbm.removeAllElements();
+        for (Clase c : clasesEnSistema) {
+            if (id.equals(c.getNombre())) {
+                auxId = c.getIdClase();
+            }
+        }
+        for (int i = 0; i < categoriasEnSistema.size(); i++) {
+            if (categoriasEnSistema.get(i).getIdClase() == auxId) {
+                cbm.addElement(categoriasEnSistema.get(i).getNombreCategoria());
+            }
+        }
+        cb_SelectorCategoriaList.setModel(cbm);
+        list_Categorias.pack();
+        list_Categorias.setLocationRelativeTo(null);
+        list_Categorias.setAlwaysOnTop(true);
+        list_Categorias.setVisible(true);
+    }//GEN-LAST:event_got_verCategoriasActionPerformed
+
+    private void cb_SelectorCategoriaListItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_SelectorCategoriaListItemStateChanged
+        try {
+            String categoria = cb_SelectorCategoriaList.getSelectedItem().toString();
+            int idCate = 0;
+            DefaultTableModel tm = (DefaultTableModel) tb_listPReguntasCategoria.getModel();
+            while (tm.getRowCount() > 0) {
+                tm.removeRow(0);
+            }
+            for (Categoria c : categoriasEnSistema) {
+                if (c.getNombreCategoria().equals(categoria)) {
+                    idCate = c.getIdCategoria();
+                }
+            }
+            for (int i = 0; i < prefuntaEnSistema.size(); i++) {
+                if (prefuntaEnSistema.get(i).getIdCategoria() == idCate) {
+                    Object datos[] = new Object[4];
+                    datos[0] = prefuntaEnSistema.get(i).getIdPregunta();
+                    datos[1] = prefuntaEnSistema.get(i).getTitulo();
+                    datos[2] = prefuntaEnSistema.get(i).getDescrpcion();
+                    if (prefuntaEnSistema.get(i).isRespuesta()) {
+                        datos[3] = "VERDADERO";
+                    } else {
+                        datos[3] = "FALSO";
+                    }
+                    tm.addRow(datos);
+                }
+            }
+            tb_listPReguntasCategoria.setModel(tm);
+        } catch (Exception ex) {
+        }
+    }//GEN-LAST:event_cb_SelectorCategoriaListItemStateChanged
+
+    private void goto_CentroCalificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goto_CentroCalificacionesActionPerformed
+        DefaultTableModel tm = (DefaultTableModel) tb_CentroDeNotas.getModel();
+        while (tm.getRowCount() > 0) {
+            tm.removeRow(0);
+        }
+        for (int i = 0; i < resultadosAlumnos.size(); i++) {
+            Object datos[] = new Object[3];
+            for (int j = 0; j < alumnosEnSistema.size(); j++) {
+                if (resultadosAlumnos.get(i).getIdAlumno() == alumnosEnSistema.get(j).getId()) {
+                    datos[0] = alumnosEnSistema.get(j).getNombre();
+                }
+            }
+            int aux = 0;
+            for (int j = 0; j < examenesEnSistema.size(); j++) {
+                if (resultadosAlumnos.get(i).getIdExamen() == examenesEnSistema.get(j).getIdExamen()) {
+                    aux = examenesEnSistema.get(j).getIdClase();
+                }
+            }
+            for (int j = 0; j < clasesEnSistema.size(); j++) {
+                if (aux == clasesEnSistema.get(j).getIdClase()) {
+                    datos[1] = clasesEnSistema.get(j).getNombre();
+                }
+            }
+            datos[2] = resultadosAlumnos.get(i).getNotaFinal();
+            tm.addRow(datos);
+        }
+        tb_CentroDeNotas.setModel(tm);
+        DefaultComboBoxModel cbm = (DefaultComboBoxModel) cb_filtroClasesNotas.getModel();
+        cbm.removeAllElements();
+        for (int i = 0; i < clasesEnSistema.size(); i++) {
+            cbm.addElement(clasesEnSistema.get(i).getNombre());
+        }
+        cb_filtroClasesNotas.setModel(cbm);
+        centroCalificaciones.pack();
+        centroCalificaciones.setLocationRelativeTo(null);
+        centroCalificaciones.setAlwaysOnTop(true);
+        centroCalificaciones.setVisible(true);
+    }//GEN-LAST:event_goto_CentroCalificacionesActionPerformed
+
+    private void cb_filtroClasesNotasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_filtroClasesNotasItemStateChanged
+        DefaultTableModel tm = (DefaultTableModel) tb_CentroDeNotas.getModel();
+        String nombreAux = cb_filtroClasesNotas.getSelectedItem().toString();
+        while (tm.getRowCount() > 0) {
+            tm.removeRow(0);
+        }
+        for (int i = 0; i < resultadosAlumnos.size(); i++) {
+            Object datos[] = new Object[3];
+            for (int j = 0; j < alumnosEnSistema.size(); j++) {
+                if (resultadosAlumnos.get(i).getIdAlumno() == alumnosEnSistema.get(j).getId()) {
+                    datos[0] = alumnosEnSistema.get(j).getNombre();
+                }
+            }
+            int aux = 0;
+            for (int j = 0; j < examenesEnSistema.size(); j++) {
+                if (resultadosAlumnos.get(i).getIdExamen() == examenesEnSistema.get(j).getIdExamen()) {
+                    aux = examenesEnSistema.get(j).getIdClase();
+                }
+            }
+            for (int j = 0; j < clasesEnSistema.size(); j++) {
+                if (aux == clasesEnSistema.get(j).getIdClase()) {
+                    datos[1] = clasesEnSistema.get(j).getNombre();
+                }
+            }
+            datos[2] = resultadosAlumnos.get(i).getNotaFinal();
+            if (nombreAux.equals(datos[1].toString())) {
+                tm.addRow(datos);
+            }
+        }
+        tb_CentroDeNotas.setModel(tm);
+    }//GEN-LAST:event_cb_filtroClasesNotasItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1231,13 +1681,19 @@ public class mainPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cb_SelectorCategoriaList;
     private javax.swing.JComboBox<String> cb_eleccionClasePregunta;
+    private javax.swing.JComboBox<String> cb_filtroClasesNotas;
+    private javax.swing.JComboBox<String> cb_selectClaseListExamen;
     private javax.swing.JComboBox<String> cb_selectorCategoria;
     private javax.swing.JComboBox<String> cb_selectorClaseParaExamen;
     private javax.swing.JComboBox<String> cb_selectorClasesCategoria;
     private javax.swing.JComboBox<String> cb_selectorExamenRealizar;
+    private javax.swing.JFrame centroCalificaciones;
     private javax.swing.JButton comenzarExamen;
     private com.toedter.calendar.JDateChooser dc_fechaExamen;
+    private javax.swing.JButton got_verCategorias;
+    private javax.swing.JButton goto_CentroCalificaciones;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1254,7 +1710,9 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JToggleButton jb_cerrarSesion;
     private javax.swing.JButton jb_comnezarNuevoExamen;
     private javax.swing.JButton jb_crearCategoria;
@@ -1277,12 +1735,16 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JButton jb_terminarExamen;
     private javax.swing.JDialog jdialog_cuadroNotas;
     private javax.swing.JSpinner js_cantPreguntas;
+    private javax.swing.JTable jt_listExamenes;
+    private javax.swing.JTable jt_notasAlumno;
     private javax.swing.JLabel labelLogin;
     private javax.swing.JLabel labelNewLogin;
     private javax.swing.JLabel labelNewName;
     private javax.swing.JLabel labelNewPassword;
     private javax.swing.JLabel label_confirmPassword;
     private javax.swing.JLabel lb_tituloPregunta;
+    private javax.swing.JFrame list_Categorias;
+    private javax.swing.JFrame list_ExamenPorClase;
     private javax.swing.JFrame pantallaCrearExamen;
     private javax.swing.JFrame pantallaCrearPregunta;
     private javax.swing.JFrame pantallaCrearcategoria;
@@ -1303,7 +1765,9 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JFrame seleccionAlumno;
     private javax.swing.JTextArea ta_descrpNuevaPregunta;
     private javax.swing.JTextArea ta_descrpPregunta;
+    private javax.swing.JTable tb_CentroDeNotas;
     private javax.swing.JTable tb_clasesDisponibles;
+    private javax.swing.JTable tb_listPReguntasCategoria;
     private javax.swing.JTextField tf_NombreCategoria;
     private javax.swing.JTextField tf_claseExamenRealizar;
     private javax.swing.JTextField tf_login;
