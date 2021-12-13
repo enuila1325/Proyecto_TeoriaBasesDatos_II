@@ -76,6 +76,7 @@ public class mainPage extends javax.swing.JFrame {
         jb_crearCuadroNotas = new javax.swing.JButton();
         jb_cerrarSesion = new javax.swing.JToggleButton();
         jb_goToMatricular = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         pantallaExamen = new javax.swing.JFrame();
         lb_tituloPregunta = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -118,6 +119,9 @@ public class mainPage extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         tb_CentroDeNotas = new javax.swing.JTable();
         cb_filtroClasesNotas = new javax.swing.JComboBox<>();
+        frameNotificaciones = new javax.swing.JFrame();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        table_notificaciones = new javax.swing.JTable();
         labelLogin = new javax.swing.JLabel();
         tf_login = new javax.swing.JTextField();
         pf_passLogin = new javax.swing.JPasswordField();
@@ -133,6 +137,7 @@ public class mainPage extends javax.swing.JFrame {
 
         jLabel4.setText("Fecha:");
 
+        jb_crearExamen.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
         jb_crearExamen.setText("CREAR EXAMEN");
         jb_crearExamen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +184,7 @@ public class mainPage extends javax.swing.JFrame {
                 .addGroup(pantallaCrearExamenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(dc_fechaExamen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(jb_crearExamen)
                 .addGap(49, 49, 49))
         );
@@ -348,7 +353,10 @@ public class mainPage extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
         jLabel9.setText("Respuesta:");
 
+        tf_tituloNuevPregunta.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 12)); // NOI18N
+
         ta_descrpNuevaPregunta.setColumns(20);
+        ta_descrpNuevaPregunta.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 12)); // NOI18N
         ta_descrpNuevaPregunta.setRows(5);
         jScrollPane1.setViewportView(ta_descrpNuevaPregunta);
 
@@ -377,6 +385,8 @@ public class mainPage extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
         jLabel10.setText("Categoria");
+
+        cb_selectorCategoria.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout pantallaCrearPreguntaLayout = new javax.swing.GroupLayout(pantallaCrearPregunta.getContentPane());
         pantallaCrearPregunta.getContentPane().setLayout(pantallaCrearPreguntaLayout);
@@ -424,7 +434,7 @@ public class mainPage extends javax.swing.JFrame {
                 .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(cb_selectorCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addGroup(pantallaCrearPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(rb_vRespNuevaPregunta)
@@ -435,7 +445,7 @@ public class mainPage extends javax.swing.JFrame {
         );
 
         jb_realizarExamen.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
-        jb_realizarExamen.setText("Realizar examen");
+        jb_realizarExamen.setText("REALIZAR EXAMEN");
         jb_realizarExamen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_realizarExamenActionPerformed(evt);
@@ -443,7 +453,7 @@ public class mainPage extends javax.swing.JFrame {
         });
 
         jb_crearCuadroNotas.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
-        jb_crearCuadroNotas.setText("Cuadro de notas");
+        jb_crearCuadroNotas.setText("VER NOTAS");
         jb_crearCuadroNotas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jb_crearCuadroNotasActionPerformed(evt);
@@ -466,26 +476,41 @@ public class mainPage extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+        jButton1.setText("Notificaciones");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout seleccionAlumnoLayout = new javax.swing.GroupLayout(seleccionAlumno.getContentPane());
         seleccionAlumno.getContentPane().setLayout(seleccionAlumnoLayout);
         seleccionAlumnoLayout.setHorizontalGroup(
             seleccionAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seleccionAlumnoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jb_cerrarSesion)
-                .addGap(21, 21, 21))
             .addGroup(seleccionAlumnoLayout.createSequentialGroup()
                 .addGap(141, 141, 141)
                 .addGroup(seleccionAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jb_crearCuadroNotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jb_realizarExamen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jb_goToMatricular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addContainerGap(119, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seleccionAlumnoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(seleccionAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seleccionAlumnoLayout.createSequentialGroup()
+                        .addComponent(jb_cerrarSesion)
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seleccionAlumnoLayout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addContainerGap())))
         );
         seleccionAlumnoLayout.setVerticalGroup(
             seleccionAlumnoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, seleccionAlumnoLayout.createSequentialGroup()
-                .addContainerGap(148, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                 .addComponent(jb_goToMatricular)
                 .addGap(104, 104, 104)
                 .addComponent(jb_realizarExamen)
@@ -501,6 +526,7 @@ public class mainPage extends javax.swing.JFrame {
 
         ta_descrpPregunta.setEditable(false);
         ta_descrpPregunta.setColumns(20);
+        ta_descrpPregunta.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 12)); // NOI18N
         ta_descrpPregunta.setRows(5);
         jScrollPane2.setViewportView(ta_descrpPregunta);
 
@@ -586,6 +612,8 @@ public class mainPage extends javax.swing.JFrame {
 
         tf_NombreCategoria.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
 
+        cb_selectorClasesCategoria.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
+
         jb_crearCategoria.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 14)); // NOI18N
         jb_crearCategoria.setText("CREAR");
         jb_crearCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -624,7 +652,7 @@ public class mainPage extends javax.swing.JFrame {
                 .addComponent(tf_NombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62)
                 .addComponent(cb_selectorClasesCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addComponent(jb_crearCategoria)
                 .addGap(56, 56, 56))
         );
@@ -796,6 +824,7 @@ public class mainPage extends javax.swing.JFrame {
                 .addGap(33, 33, 33))
         );
 
+        jt_listExamenes.setFont(new java.awt.Font("Liberation Sans Narrow", 0, 12)); // NOI18N
         jt_listExamenes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -885,6 +914,7 @@ public class mainPage extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(tb_listPReguntasCategoria);
 
+        cb_SelectorCategoriaList.setFont(new java.awt.Font("Liberation Sans Narrow", 1, 12)); // NOI18N
         cb_SelectorCategoriaList.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cb_SelectorCategoriaListItemStateChanged(evt);
@@ -962,6 +992,48 @@ public class mainPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
+        );
+
+        table_notificaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Notificaciones", "Fecha"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane8.setViewportView(table_notificaciones);
+
+        javax.swing.GroupLayout frameNotificacionesLayout = new javax.swing.GroupLayout(frameNotificaciones.getContentPane());
+        frameNotificaciones.getContentPane().setLayout(frameNotificacionesLayout);
+        frameNotificacionesLayout.setHorizontalGroup(
+            frameNotificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frameNotificacionesLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        frameNotificacionesLayout.setVerticalGroup(
+            frameNotificacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frameNotificacionesLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1455,6 +1527,7 @@ public class mainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_cb_selectorExamenRealizarItemStateChanged
 
     private void jb_comnezarNuevoExamenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_comnezarNuevoExamenActionPerformed
+        comenzarExamen.setEnabled(true);
         boolean yaRealizoExamen = false;
         int auxClase = Integer.parseInt(cb_selectorExamenRealizar.getSelectedItem().toString());
         for (ResultadoExamen r : resultadosAlumnos) {
@@ -1644,6 +1717,32 @@ public class mainPage extends javax.swing.JFrame {
         tb_CentroDeNotas.setModel(tm);
     }//GEN-LAST:event_cb_filtroClasesNotasItemStateChanged
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DefaultTableModel tm = (DefaultTableModel) table_notificaciones.getModel();
+        while (tm.getRowCount() > 0) {
+            tm.removeRow(0);
+        }
+        for (int i = 0; i < registrosEnMatricula.size(); i++) {
+            if (registrosEnMatricula.get(i).getIdAlumno() == idAlumnoEnSesion) {
+                Object datos[] = new Object[2];
+                String aux = "Usted matriculo la clase de :";
+                for (int j = 0; j < clasesEnSistema.size(); j++) {
+                    if (registrosEnMatricula.get(i).getIdClaseMatriculada() == clasesEnSistema.get(j).getIdClase()) {
+                        aux += clasesEnSistema.get(j).getNombre();
+                        datos[0] = aux;
+                    }
+                }
+                datos[1] = new Date().toString();
+                tm.addRow(datos);
+            }
+        }
+        table_notificaciones.setModel(tm);
+        frameNotificaciones.pack();
+        frameNotificaciones.setLocationRelativeTo(null);
+        frameNotificaciones.setAlwaysOnTop(true);
+        frameNotificaciones.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1692,8 +1791,10 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JFrame centroCalificaciones;
     private javax.swing.JButton comenzarExamen;
     private com.toedter.calendar.JDateChooser dc_fechaExamen;
+    private javax.swing.JFrame frameNotificaciones;
     private javax.swing.JButton got_verCategorias;
     private javax.swing.JButton goto_CentroCalificaciones;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1713,6 +1814,7 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JToggleButton jb_cerrarSesion;
     private javax.swing.JButton jb_comnezarNuevoExamen;
     private javax.swing.JButton jb_crearCategoria;
@@ -1765,6 +1867,7 @@ public class mainPage extends javax.swing.JFrame {
     private javax.swing.JFrame seleccionAlumno;
     private javax.swing.JTextArea ta_descrpNuevaPregunta;
     private javax.swing.JTextArea ta_descrpPregunta;
+    private javax.swing.JTable table_notificaciones;
     private javax.swing.JTable tb_CentroDeNotas;
     private javax.swing.JTable tb_clasesDisponibles;
     private javax.swing.JTable tb_listPReguntasCategoria;
@@ -1820,6 +1923,10 @@ public class mainPage extends javax.swing.JFrame {
             int preguntaRandom = r.nextInt(prefuntaEnSistema.size());
             Pregunta p = prefuntaEnSistema.get(preguntaRandom);
             while (p.getIdClase() != codClase) {
+                preguntaRandom = r.nextInt(prefuntaEnSistema.size());
+                p = prefuntaEnSistema.get(preguntaRandom);
+            }
+            while (idsPreguntasEnExamen.contains(preguntaRandom)) {
                 preguntaRandom = r.nextInt(prefuntaEnSistema.size());
                 p = prefuntaEnSistema.get(preguntaRandom);
             }
